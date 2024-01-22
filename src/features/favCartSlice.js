@@ -6,6 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 const initialState = {
   prod: [],
+  cart: [],
   message: "",
   total: 0,
 };
@@ -36,10 +37,48 @@ const favCartSlice = createSlice({
     getCartTotal: (state) => {
       state.total = state.prod.length;
     },
+    removeItem2: (state, action) => {
+      state.prod = state.prod.filter((item) => item.id !== action.payload);
+    },
+    increaseItemQuantity2: (state, action) => {
+      state.prod = state.prod.map((item) => {
+        if (item.id === action.payload) {
+          return { ...item, quantity: item.quantity + 1 };
+        }
+        return item;
+      });
+    },
+    decreaseItemQuantity2: (state, action) => {
+      state.prod = state.prod.map((item) => {
+        if (item.id === action.payload) {
+          // Ensure that the quantity doesn't go below 1
+          const newQuantity = Math.max(1, item.quantity - 1);
+          return { ...item, quantity: newQuantity };
+        }
+        return item;
+      });
+    },
+    addToCart: (state, action) => {
+      const item = state.prod.find((x) => x.id === action.payload);
+      if (item) {
+        state.cart.push(item);
+        toast.success("Item added successfully to the cart", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+      }
+    },
   },
 });
 
-export const { addFav, getCartTotal } = favCartSlice.actions;
+export const {
+  addFav,
+  getCartTotal,
+  decreaseItemQuantity2,
+  increaseItemQuantity2,
+  removeItem2,
+  addToCart,
+} = favCartSlice.actions;
 export const selectWishlistItems = (state) => state.whisList.prod;
 export const selectWishlistTotal = (state) => state.whisList.total;
+export const selectCartItems = (state) => state.whisList.cart;
 export default favCartSlice.reducer;

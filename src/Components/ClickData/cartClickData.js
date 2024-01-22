@@ -10,7 +10,9 @@ import { useLocation, useParams } from "react-router-dom";
 import productData from "../../productData";
 import imgFire from "../Assests/fire.png";
 import "../AllCategory/AllCategories.css";
+import Spinner from "react-bootstrap/Spinner";
 import Recommented from "../Recoomended/Recommented";
+
 const CartClickData = () => {
   const items = useSelector((state) => state.allCart.items) || [];
   const dispatch = useDispatch();
@@ -57,7 +59,9 @@ const CartClickData = () => {
     <div>
       {/* Render the selected item data here */}
       {!productDetails ? (
-        <h1>Loading...</h1>
+        <Spinner animation="border" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </Spinner>
       ) : (
         <div>
           <div className="img-clickdata">
@@ -140,7 +144,7 @@ const CartClickData = () => {
               </div>
             </div>
           </div>
-          {/* <Recommented /> */}
+          <Recommented />
         </div>
       )}
     </div>

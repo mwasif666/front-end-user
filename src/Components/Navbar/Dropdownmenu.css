@@ -4,8 +4,12 @@
 }
 .menu-dopdown .menu-toggle-dropdown {
   display: flex;
-  justify-content: space-between;
+  gap: 20px;
   align-items: center;
+  color: white !important;
+}
+.menu-dopdown .menu-toggle-dropdown {
+  color: white !important;
 }
 .menu-subdropdown {
   width: 280px;

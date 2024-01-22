@@ -8,6 +8,7 @@ import {
   increaseItemQuantity,
 } from "../features/cartSlice";
 import "./AllCategory/AllCategories.css";
+import Recommented from "./Recoomended/Recommented";
 
 const CartPage = () => {
   const { cart, totalQuantity, totalPrice } = useSelector(
@@ -146,6 +147,7 @@ const CartPage = () => {
           </div>
         </div>
       </section>
+      <Recommented />
     </div>
   );
 };
