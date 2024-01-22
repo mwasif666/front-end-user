@@ -1,0 +1,16 @@
+.img-account img {
+  width: 300px;
+  height: auto;
+}
+.MyAccount h2 {
+  color: #3160d8;
+  line-height: 46px;
+  margin-left: 20px;
+}
+.MyAccount {
+
+}
+
+ul li {
+  list-style: none;
+}

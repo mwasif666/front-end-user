@@ -1,0 +1,92 @@
+.Items-Navbar2 {
+  border-bottom: 1px solid rgb(201, 201, 201);
+  width: 100%;
+  padding: 0 !important;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+.Item_Navbar2_div1 h4 {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 600;
+}
+.Item_Navbar2_div2 {
+  position: relative;
+  display: flex;
+  gap: 25px;
+  background-color: white;
+  top: 0px;
+  padding: 20px 50px;
+}
+.Items-Navbar2 .anchors3 {
+  text-decoration: none;
+  color: rgb(63, 63, 63);
+  font-size: 18px;
+}
+.Items-Navbar2 .anchors3:hover {
+  color: #ebcc00;
+}
+.deals {
+  margin-top: 80px;
+  width: 100%;
+}
+main {
+  background-color: rgb(250, 250, 250);
+}
+.third-card {
+  height: 90vh;
+}
+
+.image-gallery-image {
+  width: 100%;
+  height: 50vh;
+}
+.image-gallery-svg {
+  display: none !important;
+}
+
+.image-gallery-right-nav .image-gallery-svg {
+  display: none !important;
+}
+.image-gallery-left-nav .image-gallery-svg {
+  display: none !important;
+}
+.image-gallery-thumbnail {
+  width: 70px !important;
+}
+.allcategories_card-2 {
+  width: 330px;
+}
+
+.accordion-button::after {
+  font-family: "Font Awesome 6 Free";
+  content: "\2b";
+  background-image: none;
+  transform: none;
+}
+.accordion-button:not(.collapsed)::after {
+  background: none;
+  font-family: "FontAwesome";
+  content: "\f068";
+  transform: none;
+}
+.filtering .border-1 {
+  border: 1px solid lightgrey;
+}
+.filtering label {
+  display: flex;
+  margin: 5px 0px;
+  gap: 10px;
+  font-size: 16px;
+}
+.input-filters-number input {
+  width: 140px;
+  height: 40px;
+}
+.input-filters-number {
+  gap: 20px;
+}
+.filtering #search-filter-input {
+  width: 300px;
+  height: 40px;
+}

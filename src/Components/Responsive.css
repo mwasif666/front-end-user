@@ -1,0 +1,154 @@
+@media all and (min-width: 1000px) and (max-width: 1200px) {
+  .Form-control input {
+    width: 400px;
+  }
+}
+@media all and (min-width: 1000px) and (max-width: 1200px) {
+  .categories_content {
+    width: 300px !important;
+    padding-left: 10px !important;
+  }
+  .categories_content p {
+    font-size: 17px !important;
+  }
+  .btn_shop_now h5 {
+    font-size: 15px;
+  }
+}
+
+@media all and (min-width: 0px) and (max-width: 1000px) {
+  .Form-control input {
+    display: none;
+  }
+  .section {
+    display: none;
+  }
+  .bord {
+    background-color: #f6d600 !important;
+    padding: 0 !important;
+  }
+  .home2 {
+    display: none;
+  }
+
+  .e-solution {
+    padding-left: 30px;
+    font-size: 22px !important;
+  }
+  .bad {
+    margin-left: 15px !important;
+    position: relative !important;
+    left: 30px !important;
+  }
+  .icons-header {
+    display: flex !important;
+  }
+  .bad .bi-suit-heart,
+  .bi-bag {
+    font-size: 25px;
+    color: black !important;
+    font-weight: 900;
+  }
+  .bi-search {
+    display: none;
+  }
+  .img-slider {
+    padding-top: 50px;
+    width: 400px !important;
+    position: relative;
+    right: 90px;
+  }
+  .anchor-contacts {
+    position: relative !important;
+    right: 10px !important;
+  }
+  .content-again {
+    padding-top: 50px;
+  }
+  .Items-Navbar .anchors3 {
+    font-size: 14px !important;
+  }
+  .content-again .btn1 {
+    width: 100px;
+    font-size: 12px !important;
+    padding: 0;
+    padding: 10px 5px;
+  }
+  .Items-Navbar {
+    display: flex !important;
+    gap: 15px !important;
+  }
+  .toggle_view {
+    display: block !important;
+  }
+  .anchors {
+    border-bottom: 1px solid lightgray;
+  }
+  .offcans_menu {
+    background-color: #f6d600;
+    font-family: "Montserrat", sans-serif;
+    margin-bottom: 10px;
+  }
+  .Categories_item {
+    display: none !important;
+  }
+
+  .categories_1 {
+    width: 100% !important;
+  }
+  .break_point_Categories {
+    display: block !important;
+  }
+  .Offer_break{
+    display: block !important;
+  }
+  .Offer{
+    display: none !important;
+  }
+}
+@media all and (min-width: 0px) and (max-width: 600px) {
+  .content-again {
+    padding-top: 0px;
+  }
+  .content-again h1 {
+    font-size: 25px;
+  }
+  .content-again .under {
+    font-size: 18px;
+  }
+  .content-again .prize p {
+    font-size: 20px;
+  }
+  .content-again .prize i {
+    font-size: 18px;
+  }
+  .content-again button {
+    width: 150px;
+  }
+  .img-slider {
+    width: 400px !important;
+    position: relative;
+    right: 80px;
+  }
+  .slider1-img {
+    position: relative;
+    right: 150px;
+  }
+  .carousel-item {
+    width: 100% !important;
+    height: 50vh !important;
+  }
+  .carousel-control-prev,
+  .carousel-control-next {
+    position: absolute;
+    top: 130px !important;
+  }
+}
+@media all and (min-width: 0px) and (max-width: 575px) {
+  .down-content-3 .fa-circle-arrow-right {
+    padding-left: 30px !important;
+  }
+  .categories_scrool {
+    display: none;
+  }
+}

@@ -1,0 +1,13 @@
+.carding-recommented {
+  position: relative;
+  width: 100%;
+}
+.Recom .recom_heading {
+    padding: 0%;
+  padding-top: 20px;
+  padding-bottom: 2px;
+  border-bottom: 1px solid lightgray;
+}
+.Recom .span-recom {
+  border-bottom: 3px solid  #3160d8;
+}

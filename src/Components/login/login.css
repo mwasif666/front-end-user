@@ -1,0 +1,104 @@
+.Login_form .Card_login_form {
+  border: none;
+}
+.Login_form .Card_login_form .btn {
+  background-color: #f6d600;
+  padding: 10px;
+  width: 50%;
+  align-items: center;
+  color: white;
+  font-weight: 600;
+  letter-spacing: 2px;
+}
+.Login_form {
+  padding-top: 60px;
+}
+.Card_login_form.card h2 {
+  font-weight: 700;
+  color: #817b7b;
+  font-size: 40px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  padding-bottom: 15px;
+  font-family: system-ui;
+  text-align: center;
+}
+.Login_form .login_input {
+  margin-top: 20px;
+}
+.line-form-main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.line-form-main .lines-form .line-1 {
+  position: absolute;
+  content: "";
+  width: 1px;
+  height: 120px;
+  background-color: #817b7b;
+  top: 70px;
+  left: 55px;
+}
+.line-form-main .lines-form .line-2 {
+  position: absolute;
+  content: "";
+  width: 1px;
+  height: 120px;
+  background-color: #817b7b;
+  top: 275px;
+  left: 55px;
+}
+.line-form-main .lines-form .line-3 {
+  position: absolute;
+  content: "";
+  width: 1px;
+  height: 120px;
+  background-color: #817b7b;
+  top: 140px;
+  left: 55px;
+}
+.line-form-main .lines-form .line-4 {
+  position: absolute;
+  content: "";
+  width: 1px;
+  height: 120px;
+  background-color: #817b7b;
+  top: 322px;
+  left: 55px;
+}
+.login-btns-social {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.login-btns-social .login-btns-social-2 .btn-login-twitter,
+.login-btns-social .login-btns-social-2 .btn-login-facebook,
+.login-btns-social .login-btns-social-2 .btn-login-google {
+  margin: 20px 0px;
+}
+.login-btns-social .btn-login-twitter .btn {
+  background-color: lightskyblue;
+  color: white;
+  width: 350px;
+  font-weight: 600;
+  padding: 12px 0px;
+  letter-spacing: 2px;
+}
+.login-btns-social .btn-login-facebook .btn {
+  background-color: rgb(4, 85, 136);
+  color: white;
+  width: 350px;
+  font-weight: 600;
+  padding: 12px 0px;
+  letter-spacing: 2px;
+}
+.login-btns-social .btn-login-google .btn {
+  background-color: orangered;
+  color: white;
+  width: 350px;
+  font-weight: 600;
+  padding: 12px 0px;
+  letter-spacing: 2px;
+}

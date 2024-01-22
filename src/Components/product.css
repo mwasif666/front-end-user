@@ -1,0 +1,134 @@
+.upper-content {
+  justify-content: space-between;
+}
+.product-upper-card {
+  border: 2px solid #f6d600;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 20px;
+}
+
+.product-img1 img {
+  width: 100%;
+  height: auto;
+}
+.down-content {
+  font-family: "Courier New", Courier, monospace;
+  text-align: center;
+  font-size: 30px;
+}
+.down-content-2 {
+  color: orange;
+}
+#DEL {
+  padding-left: 10px;
+  color: gray;
+}
+
+.upper-content-h3 {
+  padding-top: 35px;
+  padding-left: 20px;
+  color: rgb(139, 139, 139);
+}
+.upper-box1 {
+  margin-top: 20px;
+  margin-right: 20px;
+  line-height: 0;
+  padding-right: 25px;
+  background-color: #f6d600;
+  width: 80px;
+  height: 80px;
+  border-radius: 100%;
+  position: relative;
+}
+.upper-box1 h5 {
+  position: absolute;
+  width: 100%;
+  height: auto;
+  text-align: center;
+  padding-top: 35px;
+  font-weight: 700;
+  color: rgb(70, 70, 70);
+}
+.upper-box1 p {
+  position: absolute;
+  padding-top: 25px;
+  width: 100%;
+  height: auto;
+  text-align: center;
+  color: rgb(95, 95, 95);
+}
+.con {
+  padding: 0px 40px;
+}
+
+.Product_Link:hover {
+  color: #f6d600;
+}
+
+.anchors2 {
+  text-decoration: none;
+  color: rgb(63, 63, 63);
+  font-size: 20px;
+  padding-left: 35px;
+  font-weight: 600;
+}
+.anchors2:hover {
+  color: #f6d600;
+}
+.content-deal-cart {
+  position: relative;
+  top: 20%;
+}
+.content-deal-cart h1 {
+  font-size: 60px;
+  padding-bottom: 10px;
+}
+.content-deal-cart h4 {
+  color: #3160d8;
+  font-weight: 600;
+}
+.content-deal-cart .btn {
+  background-color: #3160d8;
+  font-weight: 600;
+  color: white;
+  padding: 10px 30px;
+}
+.counter {
+  padding: 10px 15px;
+  color: rgb(65, 65, 65);
+  margin-bottom: 10px !important;
+  line-height: 0px;
+}
+.counter h1 {
+  font-size: 70px;
+}
+.counter p.label {
+  font-size: 20px;
+}
+.counter-timer {
+  margin-top: 30px;
+}
+
+.hurry-up img {
+  width: 30px;
+}
+.hurry-up h6 {
+  padding-top: 15px;
+}
+.image-deal-cart {
+  position: relative;
+}
+.image-deal-cart p {
+  font-size: 20px;
+}
+
+.image-deal-cart p {
+  writing-mode: tb;
+  position: absolute;
+  right: 5%;
+  margin: auto;
+  text-align: center;
+  top: 50%;
+  transform: translateY(-50%) rotate(180deg);
+}

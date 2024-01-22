@@ -1,0 +1,10 @@
+.Offer_break{
+    display: none;
+}
+.Offer{
+    position: relative;
+}
+.Offer img{
+ width: 100%;
+ height: auto;
+}
