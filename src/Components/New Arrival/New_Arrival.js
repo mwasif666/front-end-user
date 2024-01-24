@@ -9,8 +9,21 @@ import "@splidejs/splide/dist/css/splide.min.css";
 import "../FeaturedItems/cards.css";
 import "./New_Arrival";
 import { Container, Row, Col } from "react-bootstrap";
-
+import {AuthContext} from "../../context/AuthContext"
 function New_Arrival() {
+  
+  const [newArrival , setNewArrival] = React.useState()
+  const {isLoading , setIsLoading , product} = React.useContext(AuthContext)
+  
+  React.useEffect(() => {
+    const filterNewArrival = product.filter(x => x.productFeatured === "New Arrivals");
+    setNewArrival(filterNewArrival);
+    setIsLoading(false);
+  }, [product, setIsLoading]);
+   
+  if (isLoading) {
+    return <div>Loading...</div>
+  }
   const options = {
     rewind: true,
     perPage: 6,
@@ -23,39 +36,76 @@ function New_Arrival() {
             <span className="span-recom">Newarrivals</span>
           </h4>
           <Splide className="splide_categories py-4" options={options}>
-            <SplideSlide>
-              <Col className="p-1 carding-recommented" xs="6" lg="3">
-                <Card className="ProductCards Product_Card_line Discount ">
-                  <p className="upper-product">Samsung</p>
-                  <Card.Title className="title">Galaxy Tab A8</Card.Title>
-                  <div className="upper-box2">
-                    <h6>45%</h6>
-                  </div>
-                  <Card.Img className="Card-img" variant="top" src={img1} />
-                  <div className="down-content2 Cards-Main">
-                    <p className="down-content-3">
-                      <i class="fa-solid fa-rupee-sign">
-                        : 19000
-                        <sup>
-                          <del id="DEL">25500</del>
-                        </sup>
-                      </i>
-                      <i class="fa-solid fa-circle-arrow-right"></i>
-                    </p>
-                  </div>
-                  <Card.Footer className="card-footer">
-                    <small className="text-muted">
-                      <p>
-                        <i class="fa-regular fa-eye"></i> View
+            {/* {newArrival && newArrival?.map((item , index)=>{
+              return(
+                <SplideSlide key={index}>
+                <Col className="p-1 carding-recommented" xs="6" lg="3">
+                  <Card className="ProductCards Product_Card_line Discount ">
+                    <p className="upper-product">Samsung</p>
+                    <Card.Title className="title">Galaxy Tab A8</Card.Title>
+                    <div className="upper-box2">
+                      <h6>45%</h6>
+                    </div>
+                    <Card.Img className="Card-img" variant="top" src={img1} />
+                    <div className="down-content2 Cards-Main">
+                      <p className="down-content-3">
+                        <i class="fa-solid fa-rupee-sign">
+                          : 19000
+                          <sup>
+                            <del id="DEL">25500</del>
+                          </sup>
+                        </i>
+                        <i class="fa-solid fa-circle-arrow-right"></i>
                       </p>
-                      <p>
-                        <i class="fa-regular fa-heart"></i> Wishlist
+                    </div>
+                    <Card.Footer className="card-footer">
+                      <small className="text-muted">
+                        <p>
+                          <i class="fa-regular fa-eye"></i> View
+                        </p>
+                        <p>
+                          <i class="fa-regular fa-heart"></i> Wishlist
+                        </p>
+                      </small>
+                    </Card.Footer>
+                  </Card>
+                </Col>
+              </SplideSlide>
+              )
+            })} */}
+           <SplideSlide>
+                <Col className="p-1 carding-recommented" xs="6" lg="3">
+                  <Card className="ProductCards Product_Card_line Discount ">
+                    <p className="upper-product">Samsung</p>
+                    <Card.Title className="title">Galaxy Tab A8</Card.Title>
+                    <div className="upper-box2">
+                      <h6>45%</h6>
+                    </div>
+                    <Card.Img className="Card-img" variant="top" src={img1} />
+                    <div className="down-content2 Cards-Main">
+                      <p className="down-content-3">
+                        <i class="fa-solid fa-rupee-sign">
+                          : 19000
+                          <sup>
+                            <del id="DEL">25500</del>
+                          </sup>
+                        </i>
+                        <i class="fa-solid fa-circle-arrow-right"></i>
                       </p>
-                    </small>
-                  </Card.Footer>
-                </Card>
-              </Col>
-            </SplideSlide>
+                    </div>
+                    <Card.Footer className="card-footer">
+                      <small className="text-muted">
+                        <p>
+                          <i class="fa-regular fa-eye"></i> View
+                        </p>
+                        <p>
+                          <i class="fa-regular fa-heart"></i> Wishlist
+                        </p>
+                      </small>
+                    </Card.Footer>
+                  </Card>
+                </Col>
+              </SplideSlide>
             <SplideSlide>
               <Col className="p-1 carding-recommented" xs="6" lg="3">
                 <Card className="ProductCards Product_Card_line Discount ">

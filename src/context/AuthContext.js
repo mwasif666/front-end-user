@@ -7,38 +7,28 @@ export const AuthProvide = ({ children }) => {
   const [authToken, setAuthToken] = useState(null);
   const [user, setUser] = useState(null);
   const [product ,setProduct] = useState([])
-  const [singleProd , setSingleProd] = useState([])
   const navigate = useNavigate();
   
   const [isLoading , setIsLoading] = useState(true)
   const getProduct = async()=>{
     setIsLoading(true)
-     const response = await fetch(`http://localhost:5000/api/prod/v1/getproduct`)
-     const res = await response.json()
-     console.log(res);
-     if(res.success){
-       setProduct(res.product)
-       setIsLoading(false)
-       console.log(product);
+     try {
+      const response = await fetch(`http://localhost:5000/api/prod/v1/getproduct`)
+      const res = await response.json()
+      console.log(res);
+      if(res.success){
+        setProduct(res.product)
+        setIsLoading(false)
+        console.log(product);
+      }
+     } catch (error) {
+      console.log(error);
      }
   }
   useEffect(()=>{
     getProduct()
   },[])
 
-  const getSingleProduct = async()=>{
-    setIsLoading(true)
-     const response = await fetch(`http://localhost:5000/api/prod/v1/getproduct?productFeatured=New Arrivals`)
-     const res = await response.json()
-     console.log(res);
-     if(res.success){
-       setSingleProd(res.product)
-       setIsLoading(false)
-     }
-  }
-  useEffect(()=>{
-    getSingleProduct()
-  },[])
   const login = async (data) => {
     setLoading(true);
     try {
@@ -131,8 +121,8 @@ export const AuthProvide = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ login, signUp, isLoggedIn, logout, user, loading, authToken ,setIsLoading , isLoading , product , singleProd }}>
+    <AuthContext.Provider value={{ login, signUp, isLoggedIn, logout, user, loading, authToken ,setIsLoading , isLoading , product  }}>
       {children}
     </AuthContext.Provider>
   );
-};
+}; 
