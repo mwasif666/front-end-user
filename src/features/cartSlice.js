@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { toast } from "react-toastify"; // Import the toast function
 import productData from "../productData";
 
@@ -8,6 +8,11 @@ const initialState = {
   totalQuantity: 0,
   totalPrice: 0,
   wishlist: [],
+  product:[],
+  loading: true,
+  success: false,
+  error: "",
+  message: "",
 };
 
 const cartSlice = createSlice({
@@ -27,7 +32,6 @@ const cartSlice = createSlice({
         position: toast.POSITION.TOP_RIGHT,
       });
     },
-
     getCartTotal: (state) => {
       let { totalQuantity, totalPrice } = state.cart.reduce(
         (cartTotal, cartItem) => {
@@ -45,7 +49,6 @@ const cartSlice = createSlice({
       state.totalPrice = parseInt(totalPrice.toFixed(2));
       state.totalQuantity = totalQuantity;
     },
-
     removeItem: (state, action) => {
       state.cart = state.cart.filter((item) => item.id !== action.payload);
     },
@@ -67,6 +70,23 @@ const cartSlice = createSlice({
         return item;
       });
     },
+    getProduct: (state, action) => {},
+  },
+  extraReducers: (builder) => {
+    builder
+  .addCase(fetchProduct.pending, (state) => {
+    state.loading = true;
+  })
+  .addCase(
+    fetchProduct.fulfilled,
+    (state,action) => {
+      state.product  = action.payload
+    })
+  .addCase(fetchProduct.rejected, (state) => {
+    state.loading = false;
+    // Handle the rejection, e.g., set an error message
+    state.error = "Failed to fetch product";
+  });
   },
 });
 
@@ -79,3 +99,11 @@ export const {
 } = cartSlice.actions;
 
 export default cartSlice.reducer;
+
+export const fetchProduct = createAsyncThunk("users/signup", async () => {
+  const res = await fetch("http://localhost:5000/api/prod/v1/getproduct")
+  let data = await res.json();
+  console.log(data);
+  return data;
+
+});

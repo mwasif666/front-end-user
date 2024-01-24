@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { addToCart, getCartTotal } from "../features/cartSlice";
+import { addToCart, fetchProduct, getCartTotal } from "../features/cartSlice";
 import { Card, CardImg, Col, Container, Row } from "react-bootstrap";
 import { Swiper, SwiperSlide } from "swiper/react";
 // Import Swiper styles
@@ -12,25 +12,27 @@ import ReactImageMagnify from "react-image-magnify";
 import imgFire from "./Assests/fire.png";
 import { NavLink } from "react-router-dom";
 import { Tooltip } from "antd";
-import { toast, ToastContainer } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { addFav } from "../features/favCartSlice";
+import { AuthContext } from "../context/AuthContext";
 const ProductCard = () => {
   // Fetch items from the Redux store. Initialize it as an empty array if needed.
 
-  const items = useSelector((state) => state.allCart.items) || [];
+  const {items } = useSelector((state) => state.allCart) || [];
   const dispatch = useDispatch();
   // State for the modal
   const [show, setShow] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
-
+  const {isLoading , product} = useContext(AuthContext)
+ console.log(product);
   // Function to open the modal and set the selected item
   const openModal = (item) => {
     console.log("Opening modal with item:", item);
     setSelectedItem(item);
     setShow(true);
   };
-
+ 
   // Function to close the modal
   const closeModal = () => {
     console.log("Closing modal");
@@ -77,6 +79,12 @@ const ProductCard = () => {
   const handleWhislist = (item) => {
     dispatch(addFav(item));
   };
+
+
+   if(isLoading){
+     return <div>Loading...</div>
+  }
+
   return (
     <>
       <ToastContainer />
@@ -91,16 +99,16 @@ const ProductCard = () => {
             modules={[Autoplay, Pagination]}
             className="mySwiper AllCategories"
           >
-            {items.map((item) => (
+            {product.map((item) => (
               <SwiperSlide key={item.id} className="swiper-card-allcategories">
                 <Col>
                   <Card className="allcategories_card">
                     <div className="iamges-categories">
                       <p>{item.category}</p>
                       <h4 className="text-center">{item.title}</h4>
-                      <CardImg
-                        src={item.img}
-                        alt="..."
+                      <img
+                        src={`http://localhost:5000/${item.prodImg1}`}
+                        alt={item.prodTitle}
                         style={{ objectFit: "cover" }}
                       />
                     </div>
@@ -133,11 +141,11 @@ const ProductCard = () => {
                       </div>
                     </div>
                     <div className="details-card-item text-center">
-                      <h4>Rs {item.price}</h4>
+                      <h4>Rs {item.prodPrice} </h4>
                       <p className="Ratings">{item.ratingStarsIcons}</p>
                       <div className=" d-flex justify-content-center gap-2">
-                        <p className="pt-1">Color:</p>
-                        {item.availableColors &&
+                        <p className="pt-1">Color:{item.prodColor}</p>
+                        {/* {item.availableColors &&
                           Array.isArray(item.availableColors) && (
                             <div className="colors-container">
                               {item.availableColors.map((colorObj, index) => (
@@ -148,7 +156,7 @@ const ProductCard = () => {
                                 ></div>
                               ))}
                             </div>
-                          )}
+                          )} */}
                       </div>
                     </div>
                   </Card>

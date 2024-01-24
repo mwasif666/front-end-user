@@ -34,6 +34,8 @@ const Login = () => {
       login(userData)
       setPassword("")
       setEmail("")
+    }else{
+      alert("Fill Form Properly")
     }
   };
   return (

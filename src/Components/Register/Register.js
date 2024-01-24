@@ -39,6 +39,8 @@ const {signUp} = useContext(AuthContext)
       setUserName("")
       setPassword("")
       setEmail("")
+    }else{
+      alert("Fill Form Properly")
     }
   };
   return (
