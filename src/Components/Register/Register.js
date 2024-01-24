@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { userSignUp } from "../../features/authSlice";
 import "../login/login.css";
@@ -11,13 +11,14 @@ import {
   FloatingLabel,
 } from "react-bootstrap";
 import { Link, useLocation } from "react-router-dom";
+import { AuthContext } from "../../context/AuthContext";
 
 const Register = () => {
   const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const dispatch = useDispatch();
-  const { authToken, message, errors , success } = useSelector((state) => state.auth);
+const {signUp} = useContext(AuthContext)
+ 
 
 
   const handleChange = (e) => {
@@ -29,18 +30,15 @@ const Register = () => {
     }
     if (e.target.name === "password") setPassword(e.target.value);
   };
-  const location = useLocation()
-  const handleClick = async (e, userName, email, password) => {
+  
+  const handleClick = async (e) => {
     e.preventDefault();
     const userData = { userName, email, password };
-    dispatch(userSignUp(userData));
-    if(success){
+    if(userName && email && password){
+      signUp(userData)
       setUserName("")
-      setEmail("")
       setPassword("")
-      location("/")
-    }else{
-      alert(errors || "You can put any error here")
+      setEmail("")
     }
   };
   return (
@@ -92,7 +90,7 @@ const Register = () => {
               <div className="btn-login-form w-100 d-flex justify-content-center p-4">
                 <button
                   className="btn"
-                  onClick={(e) => handleClick(e,userName, email, password)}
+                  onClick={(e) => handleClick(e)}
                 >
                   Register
                 </button>
@@ -101,20 +99,7 @@ const Register = () => {
               <div className="sign-up-link pb-4 text-end">
                 Do You have Account? <Link to="/login">Login</Link>
               </div>
-              {authToken == null ? (
-                <div>
-                  wasif don {authToken} and the message is {message}
-                </div>
-              ) : (
-                <div>
-                  wasif not don {} and the message is {message}
-                </div>
-              )}
-              {errors ? (
-                <div>error {errors[0].msg}</div>
-              ) : (
-                <div>not error , {errors}</div>
-              )}
+             
             </Card>
           </Form>
         </Col>

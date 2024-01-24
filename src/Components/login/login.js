@@ -10,13 +10,16 @@ import {
   Card,
   FloatingLabel,
 } from "react-bootstrap";
-import Register from "../Register/Register";
+
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "../../context/AuthContext";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const dispatch = useDispatch();
-  const selector = useSelector((state) => state.auth.authToken);
+  const {login} = useContext(AuthContext)
+  // const dispatch = useDispatch();
+  // const selector = useSelector((state) => state.auth.authToken);
   const handleChange = (e) => {
     if (e.target.name === "email") {
       setEmail(e.target.value);
@@ -24,9 +27,14 @@ const Login = () => {
     if (e.target.name === "password") setPassword(e.target.value);
   };
 
-  const handleClick = async () => {
+  const handleClick = async (e) => {
+    e.preventDefault();
     const userData = { email, password };
-    dispatch(userLogin(userData));
+    if( email && password){
+      login(userData)
+      setPassword("")
+      setEmail("")
+    }
   };
   return (
     <>
@@ -44,6 +52,7 @@ const Login = () => {
                   <Form.Control
                     type="email"
                     value={email}
+                    name="email"
                     placeholder="name@example.com"
                     onChange={handleChange}
                   />
@@ -54,8 +63,9 @@ const Login = () => {
                   className="mb-3 login_input"
                 >
                   <Form.Control
-                    type="email"
+                    type="password"
                     value={password}
+                    name="password"
                     placeholder="name@example.com"
                     onChange={handleChange}
                   />
@@ -84,11 +94,7 @@ const Login = () => {
                   Do not have any Account? <Link to="/register">Sign Up</Link>
                 </div>
 
-                {selector == null ? (
-                  <div>FUser Donot Matched {selector}</div>
-                ) : (
-                  <div>Successfull Login {selector}</div>
-                )}
+               
               </Card>
             </Form>
           </Col>

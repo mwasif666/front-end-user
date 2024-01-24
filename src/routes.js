@@ -18,11 +18,13 @@ import Nav_Bar from "./Components/Navbar/navbar";
 import CartClickData from "./Components/ClickData/cartClickData";
 import Wishlist from "./Components/Wish List/wishlist";
 import Mobile from "./Components/TopItems/Mobile";
+import { AuthProvide } from "./context/AuthContext";
 
 const AppRoutes = () => {
   return (
     <>
       <BrowserRouter>
+      <AuthProvide>
         <Nav_Bar />
         <Routes>
           <Route path="/" element={<Home />} />
@@ -43,6 +45,7 @@ const AppRoutes = () => {
           <Route path="wishlist" element={<Wishlist />} />
           <Route path="Mobile" element={<Mobile />} />
         </Routes>
+        </AuthProvide>
       </BrowserRouter>
     </>
   );
