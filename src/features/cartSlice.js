@@ -20,23 +20,23 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     addToCart: (state, action) => {
-      let find = state.cart.findIndex((item) => item.id === action.payload.id);
+      let find = state.cart.findIndex((item) => item._id === action.payload._id);
       if (find >= 0) {
         state.cart[find].quantity += 1;
       } else {
-        state.cart.push(action.payload);
+        state.cart.push({...action.payload , quantity:1});
       }
 
       // Show Toast Notification when an item is added to the cart
-      toast.success(`${action.payload.title} added to cart successfully!`, {
+      toast.success(`${action.payload.prodTitle} added to cart successfully!`, {
         position: toast.POSITION.TOP_RIGHT,
       });
     },
     getCartTotal: (state) => {
       let { totalQuantity, totalPrice } = state.cart.reduce(
         (cartTotal, cartItem) => {
-          const { price, quantity } = cartItem;
-          const itemTotal = price * quantity;
+          const { prodPrice, quantity } = cartItem;
+          const itemTotal = prodPrice * quantity;
           cartTotal.totalPrice += itemTotal;
           cartTotal.totalQuantity += quantity;
           return cartTotal;
@@ -50,11 +50,11 @@ const cartSlice = createSlice({
       state.totalQuantity = totalQuantity;
     },
     removeItem: (state, action) => {
-      state.cart = state.cart.filter((item) => item.id !== action.payload);
+      state.cart = state.cart.filter((item) => item._id !== action.payload);
     },
     increaseItemQuantity: (state, action) => {
       state.cart = state.cart.map((item) => {
-        if (item.id === action.payload) {
+        if (item._id === action.payload) {
           return { ...item, quantity: item.quantity + 1 };
         }
         return item;
@@ -62,7 +62,7 @@ const cartSlice = createSlice({
     },
     decreaseItemQuantity: (state, action) => {
       state.cart = state.cart.map((item) => {
-        if (item.id === action.payload) {
+        if (item._id === action.payload) {
           // Ensure that the quantity doesn't go below 1
           const newQuantity = Math.max(1, item.quantity - 1);
           return { ...item, quantity: newQuantity };
@@ -100,10 +100,8 @@ export const {
 
 export default cartSlice.reducer;
 
-export const fetchProduct = createAsyncThunk("users/signup", async () => {
+export const fetchProduct = createAsyncThunk("users/getProd", async () => {
   const res = await fetch("http://localhost:5000/api/prod/v1/getproduct")
   let data = await res.json();
-  console.log(data);
   return data;
-
 });

@@ -7,6 +7,7 @@ export const AuthProvide = ({ children }) => {
   const [authToken, setAuthToken] = useState(null);
   const [user, setUser] = useState(null);
   const [product ,setProduct] = useState([])
+  const [singleProd , setSingleProd] = useState([])
   const navigate = useNavigate();
   
   const [isLoading , setIsLoading] = useState(true)
@@ -23,6 +24,20 @@ export const AuthProvide = ({ children }) => {
   }
   useEffect(()=>{
     getProduct()
+  },[])
+
+  const getSingleProduct = async()=>{
+    setIsLoading(true)
+     const response = await fetch(`http://localhost:5000/api/prod/v1/getproduct?productFeatured=New Arrivals`)
+     const res = await response.json()
+     console.log(res);
+     if(res.success){
+       setSingleProd(res.product)
+       setIsLoading(false)
+     }
+  }
+  useEffect(()=>{
+    getSingleProduct()
   },[])
   const login = async (data) => {
     setLoading(true);
@@ -116,7 +131,7 @@ export const AuthProvide = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ login, signUp, isLoggedIn, logout, user, loading, authToken ,isLoading , product }}>
+    <AuthContext.Provider value={{ login, signUp, isLoggedIn, logout, user, loading, authToken ,setIsLoading , isLoading , product , singleProd }}>
       {children}
     </AuthContext.Provider>
   );

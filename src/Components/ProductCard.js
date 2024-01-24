@@ -25,7 +25,7 @@ const ProductCard = () => {
   const [show, setShow] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   const {isLoading , product} = useContext(AuthContext)
- console.log(product);
+
   // Function to open the modal and set the selected item
   const openModal = (item) => {
     console.log("Opening modal with item:", item);
@@ -100,14 +100,14 @@ const ProductCard = () => {
             className="mySwiper AllCategories"
           >
             {product.map((item) => (
-              <SwiperSlide key={item.id} className="swiper-card-allcategories">
+              <SwiperSlide key={item._id} className="swiper-card-allcategories">
                 <Col>
                   <Card className="allcategories_card">
                     <div className="iamges-categories">
                       <p>{item.category}</p>
-                      <h4 className="text-center">{item.title}</h4>
+                      <h4 className="text-center">{item.prodTitle}</h4>
                       <img
-                        src={`http://localhost:5000/${item.prodImg1}`}
+                        src={`http://localhost:5000/${item?.prodImg1}`}
                         alt={item.prodTitle}
                         style={{ objectFit: "cover" }}
                       />
@@ -133,7 +133,7 @@ const ProductCard = () => {
 
                         <Tooltip placement="left" title="View Item">
                           <p>
-                            <NavLink to={`cartClickData/${item.id}`}>
+                            <NavLink to={`cartClickData/${item._id}`}>
                               <i className="bi bi-eye text-white"></i>
                             </NavLink>
                           </p>
@@ -188,12 +188,12 @@ const ProductCard = () => {
                   <ReactImageMagnify
                     {...{
                       smallImage: {
-                        alt: selectedItem?.title,
+                        alt: selectedItem?.prodTitle,
                         isFluidWidth: true,
-                        src: selectedItem?.img,
+                        src: `http://localhost:5000/${selectedItem?.prodImg1}`,
                       },
                       largeImage: {
-                        src: selectedItem?.img,
+                        src: `http://localhost:5000/${selectedItem?.prodImg1}`,
                         width: 1200,
                         height: 1800,
                       },
@@ -203,7 +203,7 @@ const ProductCard = () => {
               </div>
               <div className="col-md-7 modal-card-1">
                 <div style={{ marginLeft: "10px" }}>
-                  <h1>{selectedItem?.title}</h1>
+                  <h1>{selectedItem?.prodTitle}</h1>
                   <div className="ratings-modal d-flex gap-3">
                     <div className="ratings-modal-1">
                       <i class="fa-solid fa-star"></i>
@@ -217,7 +217,7 @@ const ProductCard = () => {
                         <p>5 Reviews</p>
                       </div>
                       <div className="ratings-modal-sub-2 ps-4">
-                        <img src={imgFire} />
+                        <img src={`http://localhost:5000/${selectedItem?.prodImg1}`} />
                       </div>
                       <div className="ratings-modal-sub-2">
                         <p>8 sold in last 10 hours</p>
@@ -225,9 +225,9 @@ const ProductCard = () => {
                     </div>
                   </div>
                   <div className="modal-cart-price">
-                    <h3>Rs {selectedItem?.price}</h3>
-                    <p>{selectedItem?.description}</p>
-                    <h6>Color: {selectedItem?.color}</h6>
+                    <h3>Rs {selectedItem?.prodPrice}</h3>
+                    <p>{selectedItem?.prodDesc}</p>
+                    <h6>Color: {selectedItem?.prodColor}</h6>
                   </div>
                   {selectedItem && selectedItem.quantity !== undefined ? (
                     <div className="col-lg-12 col-md-6 mb-4 mb-lg-0 d-flex gap-4">
@@ -269,7 +269,7 @@ const ProductCard = () => {
                         </button>
                       </div>
                       <p className="text-start text-md-center d-none">
-                        <strong>{selectedItem.price}</strong>
+                        <strong>{selectedItem.prodPrice}</strong>
                       </p>
                     </div>
                   ) : null}

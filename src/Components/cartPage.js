@@ -41,7 +41,7 @@ const CartPage = () => {
                             className="btn btn-sm me-1 mb-2 remove-item-btnn"
                             data-mdb-toggle="tooltip"
                             title="Remove item"
-                            onClick={() => dispatch(removeItem(data.id))}
+                            onClick={() => dispatch(removeItem(data._id))}
                           >
                             <i className="fas fa-close"></i>
                           </button>
@@ -52,20 +52,20 @@ const CartPage = () => {
                           data-mdb-ripple-color="light"
                         >
                           <img
-                            src={data.img}
+                            src={`http://localhost:5000/${data?.prodImg1}`} 
+                            alt={data.prodTitle}
                             className="w-100"
-                            alt="Blue Jeans Jacket"
                           />
                         </div>
                       </div>
 
                       <div className="col-lg-5 col-md-6 pt-5">
                         <h4>
-                          <strong>{data.title}</strong>
+                          <strong>{data.prodTitle}</strong>
                         </h4>
-                        <p>{data.color}</p>
+                        <p>{data.prodColor}</p>
                         <p className="text-start">
-                          <strong>{data.price}</strong>
+                          <strong>{data.prodPrice}</strong>
                         </p>
                       </div>
 
@@ -77,7 +77,7 @@ const CartPage = () => {
                           <button
                             className="btn px-3 me-2"
                             onClick={() =>
-                              dispatch(decreaseItemQuantity(data.id))
+                              dispatch(decreaseItemQuantity(data._id))
                             }
                           >
                             <i className="fas fa-minus"></i>
@@ -98,7 +98,7 @@ const CartPage = () => {
                           <button
                             className="btn px-3 ms-2"
                             onClick={() =>
-                              dispatch(increaseItemQuantity(data.id))
+                              dispatch(increaseItemQuantity(data._id))
                             }
                           >
                             <i className="fas fa-plus"></i>
