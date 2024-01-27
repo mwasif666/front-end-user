@@ -19,7 +19,7 @@ const favCartSlice = createSlice({
       let localStorageData = JSON.parse(localStorage.getItem("favProd")) || [];
       let favFoodData = action.payload;
       console.log("redux", favFoodData);
-      let check = state.prod.find((x) => x.id === favFoodData.id);
+      let check = state.prod.find((x) => x._id === favFoodData._id);
 
       if (check) {
         // Show notification using react-toastify
@@ -38,11 +38,11 @@ const favCartSlice = createSlice({
       state.total = state.prod.length;
     },
     removeItem2: (state, action) => {
-      state.prod = state.prod.filter((item) => item.id !== action.payload);
+      state.prod = state.prod.filter((item) => item._id !== action.payload._id);
     },
     increaseItemQuantity2: (state, action) => {
       state.prod = state.prod.map((item) => {
-        if (item.id === action.payload) {
+        if (item._id === action.payload) {
           return { ...item, quantity: item.quantity + 1 };
         }
         return item;
@@ -50,7 +50,7 @@ const favCartSlice = createSlice({
     },
     decreaseItemQuantity2: (state, action) => {
       state.prod = state.prod.map((item) => {
-        if (item.id === action.payload) {
+        if (item._id === action.payload) {
           // Ensure that the quantity doesn't go below 1
           const newQuantity = Math.max(1, item.quantity - 1);
           return { ...item, quantity: newQuantity };
@@ -59,7 +59,7 @@ const favCartSlice = createSlice({
       });
     },
     addToCart: (state, action) => {
-      const item = state.prod.find((x) => x.id === action.payload);
+      const item = state.prod.find((x) => x._id === action.payload);
       if (item) {
         state.cart.push(item);
         toast.success("Item added successfully to the cart", {

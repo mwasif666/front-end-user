@@ -1,5 +1,3 @@
-// Wishlist.js
-
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -18,6 +16,14 @@ const Wishlist = () => {
   const wishlistItems = useSelector(selectWishlistItems);
   const wishlistTotal = useSelector(selectWishlistTotal);
   const dispatch = useDispatch();
+
+  const handleIncreaseQuantity = (itemId) => {
+    dispatch(increaseItemQuantity2(itemId));
+  };
+
+  const handleDecreaseQuantity = (itemId) => {
+    dispatch(decreaseItemQuantity2(itemId));
+  };
 
   useEffect(() => {
     dispatch(getCartTotal());
@@ -41,7 +47,7 @@ const Wishlist = () => {
               </h6>
               <div className="card-body">
                 {wishlistItems.map((item) => (
-                  <div className="row">
+                  <div className="row" key={item._id}>
                     <div className="col-lg-3 col-md-12">
                       <div className="remove-item-btn">
                         <button
@@ -49,49 +55,33 @@ const Wishlist = () => {
                           className="btn btn-sm me-1 mb-2 remove-item-btnn"
                           data-mdb-toggle="tooltip"
                           title="Remove item"
-                          onClick={() => dispatch(removeItem2(item.id))}
+                          onClick={() => dispatch(removeItem2(item._id))}
                         >
                           <i className="fas fa-close"></i>
                         </button>
                       </div>
-
                       <div
                         className="bg-image hover-overlay hover-zoom ripple rounded"
                         data-mdb-ripple-color="light"
                       >
                         <img
-                          src={item.img}
+                          src={`http://localhost:5000/${item?.prodImg1}`}
                           className="w-100"
                           alt="Blue Jeans Jacket"
                         />
                       </div>
                     </div>
-
                     <div className="col-lg-5 col-md-6 pt-5">
                       <h4>
-                        <strong>{item.title}</strong>
+                        <strong>{item.prodTitle}</strong>
                       </h4>
-
                       <div className=" d-flex gap-2">
-                        <p className="pt-1">Color:</p>
-                        {item.availableColors &&
-                          Array.isArray(item.availableColors) && (
-                            <div className="colors-container">
-                              {item.availableColors.map((colorObj, index) => (
-                                <div
-                                  key={index}
-                                  className="color-box"
-                                  style={{ backgroundColor: colorObj.boxColor }}
-                                ></div>
-                              ))}
-                            </div>
-                          )}
+                        <p className="pt-1">Color: {item.prodColor}</p>
                       </div>
                       <p className="text-start">
-                        <strong>{item.price}</strong>
+                        <strong>{item.prodPrice}</strong>
                       </p>
                     </div>
-
                     <div className="col-lg-4 col-md-6 pt-5">
                       <div
                         className="d-flex mb-4 increase-decrease"
@@ -99,30 +89,24 @@ const Wishlist = () => {
                       >
                         <button
                           className="btn px-3 me-2"
-                          onClick={() =>
-                            dispatch(decreaseItemQuantity2(item.id))
-                          }
+                          onClick={() => handleDecreaseQuantity(item._id)}
                         >
                           <i className="fas fa-minus"></i>
                         </button>
-
                         <div className="form-outline">
                           <input
                             id="form1"
                             min="0"
                             name="quantity"
-                            value={item.quantity}
+                            value={isNaN(item.quantity) ? 0 : item.quantity}
                             type="text"
                             className="form-control border-0"
                             onChange={() => null}
                           />
                         </div>
-
                         <button
                           className="btn px-3 ms-2"
-                          onClick={() =>
-                            dispatch(increaseItemQuantity2(item.id))
-                          }
+                          onClick={() => handleIncreaseQuantity(item._id)}
                         >
                           <i className="fas fa-plus"></i>
                         </button>
@@ -136,7 +120,6 @@ const Wishlist = () => {
           </div>
         </div>
       </section>
-
       <Recommented />
     </>
   );

@@ -60,6 +60,7 @@ const authSlice = createSlice({
       .addCase(userSignUp.rejected, (state) => {
         state.loading = true;
       });
+      
   },
 });
 
