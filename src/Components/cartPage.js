@@ -9,6 +9,7 @@ import {
 } from "../features/cartSlice";
 import "./AllCategory/AllCategories.css";
 import Recommented from "./Recoomended/Recommented";
+import { Link } from "react-router-dom";
 
 const CartPage = () => {
   const { cart, totalQuantity, totalPrice } = useSelector(
@@ -52,7 +53,7 @@ const CartPage = () => {
                           data-mdb-ripple-color="light"
                         >
                           <img
-                            src={`http://localhost:5000/${data?.prodImg1}`} 
+                            src={`http://localhost:5000/${data?.prodImg1}`}
                             alt={data.prodTitle}
                             className="w-100"
                           />
@@ -133,13 +134,15 @@ const CartPage = () => {
                     </li>
                   </ul>
                   <div className="increase-decrese-2 ">
-                    <button
-                      type="button"
-                      className="modal-cart-button btn text-white"
-                    >
-                      Go to checkout
-                      <i className="bi bi-cart4"></i>
-                    </button>
+                    <Link to="/Checkout">
+                      <button
+                        type="button"
+                        className="modal-cart-button btn text-white"
+                      >
+                        Go to checkout
+                        <i className="bi bi-cart4"></i>
+                      </button>
+                    </Link>
                   </div>
                 </div>
               </div>
