@@ -16,11 +16,10 @@ const favCartSlice = createSlice({
   initialState,
   reducers: {
     addFav: (state, action) => {
-      let localStorageData = JSON.parse(localStorage.getItem("favProd")) || [];
+      state.prod = JSON.parse(localStorage.getItem("favProd")) || [];
       let favFoodData = action.payload;
-      console.log("redux", favFoodData);
-      let check = state.prod.find((x) => x._id === favFoodData._id);
-
+      let check = state.prod.find((x) => x._id === favFoodData._id );
+      
       if (check) {
         // Show notification using react-toastify
         toast.error("Item is already present in the wishlist", {
@@ -34,11 +33,17 @@ const favCartSlice = createSlice({
         });
       }
     },
+    setFavProd:(state)=>{
+      let result = JSON.parse(localStorage.getItem("favProd"));
+      state.prod = result
+      console.log(result);
+    },
     getCartTotal: (state) => {
-      state.total = state.prod.length;
+      state.total = state.prod?.length;
     },
     removeItem2: (state, action) => {
-      state.prod = state.prod.filter((item) => item._id !== action.payload._id);
+      state.prod = state.prod.filter((item) => item._id !== action.payload);
+      localStorage.setItem("favProd", JSON.stringify(state.prod));
     },
     increaseItemQuantity2: (state, action) => {
       state.prod = state.prod.map((item) => {
@@ -77,6 +82,8 @@ export const {
   increaseItemQuantity2,
   removeItem2,
   addToCart,
+  setFavProd
+
 } = favCartSlice.actions;
 export const selectWishlistItems = (state) => state.whisList.prod;
 export const selectWishlistTotal = (state) => state.whisList.total;
