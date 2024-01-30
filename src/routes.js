@@ -19,32 +19,34 @@ import CartClickData from "./Components/ClickData/cartClickData";
 import Wishlist from "./Components/Wish List/wishlist";
 import Mobile from "./Components/TopItems/Mobile";
 import { AuthProvide } from "./context/AuthContext";
+import Checkout from "./Components/Ceckout/Checkout";
 
 const AppRoutes = () => {
   return (
     <>
       <BrowserRouter>
-      <AuthProvide>
-        <Nav_Bar />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="About" element={<About />} />
-          <Route path="Contact" element={<Contact />} />
-          <Route path="Featured" element={<Featured />} />
-          <Route path="OnSale" element={<OnSale />} />
-          <Route path="TOPrate" element={<TOPrate />} />
-          <Route path="Top20" element={<Top20 />} />
-          <Route path="Mobile_Tab" element={<Mobile_Tab />} />
-          <Route path="Laptop_Comp" element={<Laptop_Comp />} />
-          <Route path="Videocamera" element={<Videocamera />} />
-          <Route path="cart" element={<CartPage />} />
-          <Route path="login" element={<Login />} />
-          <Route path="register" element={<Register />} />
-          <Route path="cartClickData/:id" element={<CartClickData />} />
-          <Route path="MyAccount" element={<MyAccount />} />
-          <Route path="wishlist" element={<Wishlist />} />
-          <Route path="Mobile" element={<Mobile />} />
-        </Routes>
+        <AuthProvide>
+          <Nav_Bar />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="About" element={<About />} />
+            <Route path="Contact" element={<Contact />} />
+            <Route path="Featured" element={<Featured />} />
+            <Route path="OnSale" element={<OnSale />} />
+            <Route path="TOPrate" element={<TOPrate />} />
+            <Route path="Top20" element={<Top20 />} />
+            <Route path="Mobile_Tab" element={<Mobile_Tab />} />
+            <Route path="Laptop_Comp" element={<Laptop_Comp />} />
+            <Route path="Videocamera" element={<Videocamera />} />
+            <Route path="cart" element={<CartPage />} />
+            <Route path="login" element={<Login />} />
+            <Route path="register" element={<Register />} />
+            <Route path="cartClickData/:id" element={<CartClickData />} />
+            <Route path="MyAccount" element={<MyAccount />} />
+            <Route path="wishlist" element={<Wishlist />} />
+            <Route path="Mobile" element={<Mobile />} />
+            <Route path="Checkout" element={<Checkout />} />
+          </Routes>
         </AuthProvide>
       </BrowserRouter>
     </>
