@@ -26,7 +26,8 @@ const favCartSlice = createSlice({
           position: toast.POSITION.TOP_RIGHT,
         });
       } else {
-        state.prod = [...state.prod, favFoodData];
+        const extendedFavFood = {...favFoodData , quantity:1}
+        state.prod = [...state.prod, extendedFavFood];
         localStorage.setItem("favProd", JSON.stringify(state.prod));
         toast.success("Item add successfuly in the wishlist", {
           position: toast.POSITION.TOP_RIGHT,
@@ -36,7 +37,6 @@ const favCartSlice = createSlice({
     setFavProd:(state)=>{
       let result = JSON.parse(localStorage.getItem("favProd"));
       state.prod = result
-      console.log(result);
     },
     getCartTotal: (state) => {
       state.total = state.prod?.length;
