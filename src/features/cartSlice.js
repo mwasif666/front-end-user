@@ -70,6 +70,9 @@ const cartSlice = createSlice({
         return item;
       });
     },
+    setEmptyCart:(state , action)=>{
+      state.cart = []
+    },
     getProduct: (state, action) => {},
   },
   extraReducers: (builder) => {
@@ -96,6 +99,7 @@ export const {
   removeItem,
   increaseItemQuantity,
   decreaseItemQuantity,
+  setEmptyCart
 } = cartSlice.actions;
 
 export default cartSlice.reducer;

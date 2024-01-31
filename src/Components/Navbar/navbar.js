@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Navbar from "react-bootstrap/Navbar";
@@ -22,9 +22,12 @@ import img2 from "../WasifImg/wasif_ava.jpg";
 import { useDispatch, useSelector } from "react-redux";
 import { getCartTotal } from "../../features/cartSlice";
 import DropdownLink from "./Dropdown-menu";
+import { AuthContext } from "../../context/AuthContext";
 
 function Nav_Bar() {
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const { authToken } = useContext(AuthContext);
+
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -59,12 +62,14 @@ function Nav_Bar() {
               <div className="box3">
                 <i class="bi bi-geo-alt"></i>
                 <p id="location">Store Location</p>
+              </div>
                 <p id="line">|</p>
-              </div>
-              <div className="box4">
-                <i class="bi bi-person"></i>
-                <Link to="/login">Login or Register</Link>
-              </div>
+              {authToken === null ? (
+                <div className="box4">
+                  <i class="bi bi-person"></i>
+                  <Link to="/login">Login or Register</Link>
+                </div>
+              ) : null}
             </div>
           </div>
         </Container>

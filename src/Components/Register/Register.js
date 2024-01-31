@@ -10,14 +10,14 @@ import {
   Card,
   FloatingLabel,
 } from "react-bootstrap";
-import { Link, useLocation } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 
 const Register = () => {
   const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-const {signUp} = useContext(AuthContext)
+const {authToken ,signUp} = useContext(AuthContext)
  
 
 
@@ -43,6 +43,10 @@ const {signUp} = useContext(AuthContext)
       alert("Fill Form Properly")
     }
   };
+
+  if(authToken){
+    return <Navigate to="/" replace={true} />
+   }
   return (
     <Container>
       <Row className="h-100">

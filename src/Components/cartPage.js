@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import {
@@ -10,11 +10,13 @@ import {
 import "./AllCategory/AllCategories.css";
 import Recommented from "./Recoomended/Recommented";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
 
 const CartPage = () => {
   const { cart, totalQuantity, totalPrice } = useSelector(
     (state) => state.allCart
   );
+  const { authToken } = useContext(AuthContext);
 
   const dispatch = useDispatch();
 
@@ -134,15 +136,26 @@ const CartPage = () => {
                     </li>
                   </ul>
                   <div className="increase-decrese-2 ">
-                    <Link to="/Checkout">
+                    {authToken ? (
+                      <Link to="/Checkout">
+                        <button
+                          type="button"
+                          className="modal-cart-button btn text-white"
+                        >
+                          Go to checkout
+                          <i className="bi bi-cart4"></i>
+                        </button>
+                      </Link>
+                    ) : (
                       <button
                         type="button"
                         className="modal-cart-button btn text-white"
+                        disabled={true}
                       >
                         Go to checkout
                         <i className="bi bi-cart4"></i>
                       </button>
-                    </Link>
+                    )}
                   </div>
                 </div>
               </div>

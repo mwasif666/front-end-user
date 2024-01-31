@@ -78,17 +78,17 @@ export const AuthProvide = ({ children }) => {
       body: JSON.stringify(data)
     });
     const res = await response.json()
+    console.log(res);
     if(res.errors){
       alert(res.errors[0].msg)
       return
     }
-    if (res.data && res.success) {
+    if (res.success) {
       setAuthToken(res.authToken);
       localStorage.setItem("authToken", res.authToken);
       localStorage.setItem("userDetails",JSON.stringify(res.userDetails));
       setLoading(false);
       alert(res.message);
-      navigate("/"); 
     } else {
       alert(res.message);
       setLoading(false);
@@ -101,7 +101,7 @@ export const AuthProvide = ({ children }) => {
   const isLoggedIn = () => {
     setLoading(true);
     let authToken = localStorage.getItem("authToken");
-    let user = localStorage.getItem("userDetails");
+    let user = JSON.parse(localStorage.getItem("userDetails"));
     setAuthToken(authToken);
     setUser(user);
     setLoading(false);

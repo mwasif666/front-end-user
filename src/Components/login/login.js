@@ -11,13 +11,13 @@ import {
   FloatingLabel,
 } from "react-bootstrap";
 
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const {login} = useContext(AuthContext)
+  const {authToken,login} = useContext(AuthContext)
   // const dispatch = useDispatch();
   // const selector = useSelector((state) => state.auth.authToken);
   const handleChange = (e) => {
@@ -38,6 +38,9 @@ const Login = () => {
       alert("Fill Form Properly")
     }
   };
+  if(authToken){
+    return <Navigate to="/" replace={true} />
+   }
   return (
     <>
       <Container>
