@@ -19,12 +19,12 @@ import { AuthContext } from "../context/AuthContext";
 const ProductCard = () => {
   // Fetch items from the Redux store. Initialize it as an empty array if needed.
 
-  const {items } = useSelector((state) => state.allCart) || [];
+  const { items } = useSelector((state) => state.allCart) || [];
   const dispatch = useDispatch();
   // State for the modal
   const [show, setShow] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
-  const {isLoading , product} = useContext(AuthContext)
+  const { isLoading, product } = useContext(AuthContext);
 
   // Function to open the modal and set the selected item
   const openModal = (item) => {
@@ -32,7 +32,7 @@ const ProductCard = () => {
     setSelectedItem(item);
     setShow(true);
   };
- 
+
   // Function to close the modal
   const closeModal = () => {
     console.log("Closing modal");
@@ -80,9 +80,8 @@ const ProductCard = () => {
     dispatch(addFav(item));
   };
 
-
-   if(isLoading){
-     return <div>Loading...</div>
+  if (isLoading) {
+    return <div>Loading...</div>;
   }
 
   return (
@@ -110,6 +109,13 @@ const ProductCard = () => {
                         src={`http://localhost:5000/${item?.prodImg1}`}
                         alt={item.prodTitle}
                         style={{ objectFit: "cover" }}
+                        id="img1"
+                      />
+                      <img
+                        src={`http://localhost:5000/${item?.prodImg2}`}
+                        alt={item.prodTitle}
+                        style={{ objectFit: "cover" }}
+                        id="img2"
                       />
                     </div>
                     <div className="Box-icons2">
@@ -145,18 +151,6 @@ const ProductCard = () => {
                       <p className="Ratings">{item.ratingStarsIcons}</p>
                       <div className=" d-flex justify-content-center gap-2">
                         <p className="pt-1">Color:{item.prodColor}</p>
-                        {/* {item.availableColors &&
-                          Array.isArray(item.availableColors) && (
-                            <div className="colors-container">
-                              {item.availableColors.map((colorObj, index) => (
-                                <div
-                                  key={index}
-                                  className="color-box"
-                                  style={{ backgroundColor: colorObj.boxColor }}
-                                ></div>
-                              ))}
-                            </div>
-                          )} */}
                       </div>
                     </div>
                   </Card>
@@ -217,10 +211,12 @@ const ProductCard = () => {
                         <p>5 Reviews</p>
                       </div>
                       <div className="ratings-modal-sub-2 ps-4">
-                        <img src={`http://localhost:5000/${selectedItem?.prodImg1}`} />
+                        <i class="fa-solid fa-truck-fast"></i>
                       </div>
                       <div className="ratings-modal-sub-2">
-                        <p>8 sold in last 10 hours</p>
+                        <p>
+                          <span>{selectedItem?.prodQty}</span> Items in stock
+                        </p>
                       </div>
                     </div>
                   </div>
