@@ -2,6 +2,7 @@ import { createContext, useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 export const AuthContext = createContext();
+
 export const AuthProvide = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [authToken, setAuthToken] = useState(null);
@@ -121,7 +122,7 @@ export const AuthProvide = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ login, signUp, isLoggedIn, logout, user, loading, authToken ,setIsLoading , isLoading , product  }}>
+    <AuthContext.Provider value={{ login, signUp, isLoggedIn, logout, user, loading, authToken, setIsLoading, isLoading, product}}>
       {children}
     </AuthContext.Provider>
   );
