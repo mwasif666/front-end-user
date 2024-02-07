@@ -16,7 +16,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { addFav } from "../features/favCartSlice";
 import { AuthContext } from "../context/AuthContext";
 
-const ProductCard = ({ searchQuery }) => {
+const ProductCard = () => {
   const { items } = useSelector((state) => state.allCart) || [];
   const dispatch = useDispatch();
   const [show, setShow] = useState(false);
@@ -76,21 +76,23 @@ const ProductCard = ({ searchQuery }) => {
     return <div>Loading...</div>;
   }
 
-  const filteredProducts = product.filter(
-    (item) =>
-      item &&
-      item.prodTitle &&
-      item.prodTitle.toLowerCase()?.includes(searchQuery?.toLowerCase())
-  );
-
   return (
     <>
       <ToastContainer />
-      <Container fluid className="con allcategories_container filter-Product">
+
+      <Container fluid className="con allcategories_container">
         <Row className="swiper-card-allcategorie">
-          <Col>
-            {filteredProducts.map((item) => (
-              <div key={item._id} className="swiper-card-allcategories">
+          <Swiper
+            spaceBetween={30}
+            slidesPerView={4}
+            pagination={{
+              clickable: true,
+            }}
+            modules={[Autoplay, Pagination]}
+            className="mySwiper AllCategories"
+          >
+            {product.map((item) => (
+              <SwiperSlide key={item._id} className="swiper-card-allcategories">
                 <Col>
                   <Card className="allcategories_card">
                     <div className="iamges-categories">
@@ -146,12 +148,11 @@ const ProductCard = ({ searchQuery }) => {
                     </div>
                   </Card>
                 </Col>
-              </div>
+              </SwiperSlide>
             ))}
-          </Col>
+          </Swiper>
         </Row>
       </Container>
-
       <Modal
         show={show}
         onHide={closeModal}

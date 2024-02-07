@@ -5,7 +5,7 @@ import Offer from "./Offers/Offer";
 import Recommented from "./Recoomended/Recommented";
 import New_Arrival from "./New Arrival/New_Arrival";
 import Carousel from "./HomeCarousel/Carousel";
-import ProductCard from "./ProductCard";
+import ProductCard2 from "./ProductCard2";
 import VideoDrone from "./VideoDrone/VideoDrone";
 import FeaturedTabs from "./FeaturedItems/Featured-Tabs";
 import "./product.css";
@@ -18,7 +18,7 @@ const Home = () => {
     <>
       <CustomCursor />
       <Carousel />
-      <ProductCard />
+      <ProductCard2 />
       <Offer />
       <DealCart />
       <FeaturedTabs />
