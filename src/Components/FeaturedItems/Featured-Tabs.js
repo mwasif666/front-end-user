@@ -62,13 +62,13 @@ export default function FeaturedTabs() {
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
-        <Featured />
+        <Featured setFeaturedProd={"featured"} />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-        <TOPrate />
+        <Featured setFeaturedProd={"on-sale"} />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
-        <OnSale />
+        <Featured setFeaturedProd={"top-rated"} />
       </CustomTabPanel>
     </Box>
   );

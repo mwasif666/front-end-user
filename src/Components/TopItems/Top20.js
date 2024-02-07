@@ -120,15 +120,24 @@ const Top20 = (props) => {
                 <SwiperSlide key={index} className="swiper-card-allcategories">
                   <Col>
                     <Card className="allcategories_card">
-                      <div className="iamges-categories">
-                        <p>{item.prodCategory}</p>
-                        <h4 className="text-center">{item.prodTitle}</h4>
-                        <CardImg
-                          src={item.img}
-                          alt="..."
-                          style={{ objectFit: "cover" }}
-                        />
-                      </div>
+                      <NavLink to={`cartClickData/${item._id}`}>
+                        <div className="iamges-categories">
+                          <p>{item.category}</p>
+                          <h4 className="text-center">{item.prodTitle}</h4>
+                          <img
+                            src={`http://localhost:5000/${item?.prodImg1}`}
+                            alt={item.prodTitle}
+                            style={{ objectFit: "cover" }}
+                            id="img1"
+                          />
+                          <img
+                            src={`http://localhost:5000/${item?.prodImg2}`}
+                            alt={item.prodTitle}
+                            style={{ objectFit: "cover" }}
+                            id="img2"
+                          />
+                        </div>
+                      </NavLink>
                       <div className="Box-icons2">
                         <div className="content-box-cart2">
                           <Tooltip placement="left" title="Add To Cart">
@@ -137,8 +146,12 @@ const Top20 = (props) => {
                             </p>
                           </Tooltip>
 
-                          <Tooltip placement="left" title="Quick View">
-                            <p onClick={() => openModal(item)}>
+                          <Tooltip
+                            placement="left"
+                            title="Quick View"
+                            onClick={() => openModal(item)}
+                          >
+                            <p>
                               <i className="bi bi-info"></i>
                             </p>
                           </Tooltip>
@@ -147,33 +160,20 @@ const Top20 = (props) => {
                               <i className="bi bi-heart"></i>
                             </p>
                           </Tooltip>
-
-                          <Tooltip placement="left" title="View Item">
-                            <p>
-                              <NavLink to={`cartClickData/${item.id}`}>
+                          <NavLink to={`cartClickData/${item._id}`}>
+                            <Tooltip placement="left" title="View Item">
+                              <p>
                                 <i className="bi bi-eye text-white"></i>
-                              </NavLink>
-                            </p>
-                          </Tooltip>
+                              </p>
+                            </Tooltip>
+                          </NavLink>
                         </div>
                       </div>
                       <div className="details-card-item text-center">
-                        <h4>Rs {item.prodPrice}</h4>
+                        <h4>Rs {item.prodPrice} </h4>
                         <p className="Ratings">{item.ratingStarsIcons}</p>
                         <div className=" d-flex justify-content-center gap-2">
-                          <p className="pt-1">Color: {item.prodColor}</p>
-                          {/* {item.availableColors &&
-                          Array.isArray(item.availableColors) && (
-                            <div className="colors-container">
-                              {item.availableColors.map((colorObj, index) => (
-                                <div
-                                  key={index}
-                                  className="color-box"
-                                  style={{ backgroundColor: colorObj.boxColor }}
-                                ></div>
-                              ))}
-                            </div>
-                          )} */}
+                          <p className="pt-1">Color:{item.prodColor}</p>
                         </div>
                       </div>
                     </Card>

@@ -57,18 +57,24 @@ export default function TopItem() {
           <Tab label="Best Deals" {...a11yProps(0)} />
           <Tab label="TV & LED" {...a11yProps(1)} />
           <Tab label="Laptop & Computer" {...a11yProps(2)} />
-          <Tab label="Cameras" {...a11yProps(3)} />
+          <Tab label="Electronic" {...a11yProps(3)} />
           <Tab label="Accessories" {...a11yProps(4)} />
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
-        <Best_Sellers setFeaturedProd={"electronic"} />
+        <Best_Sellers setFeaturedProd={"best-deals"} />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-        <Best_Sellers setFeaturedProd={"electronic"} />
+        <Best_Sellers setFeaturedProd={"tv-led"} />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
+        <Best_Sellers setFeaturedProd={"laptop-computer"} />
+      </CustomTabPanel>
+      <CustomTabPanel value={value} index={3}>
         <Best_Sellers setFeaturedProd={"electronic"} />
+      </CustomTabPanel>
+      <CustomTabPanel value={value} index={4}>
+        <Best_Sellers setFeaturedProd={"entertainment"} />
       </CustomTabPanel>
     </Box>
   );

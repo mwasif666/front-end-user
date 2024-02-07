@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { addToCart, getCartTotal } from "../../features/cartSlice";
 import { Card, CardImg, Col, Container, Row } from "react-bootstrap";
@@ -12,10 +12,9 @@ import ReactImageMagnify from "react-image-magnify";
 import imgFire from "../Assests/fire.png";
 import { NavLink } from "react-router-dom";
 import { Tooltip } from "antd";
-import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { addFav } from "../../features/favCartSlice";
-const Featured = () => {
+const Featured = (props) => {
   // Fetch items from the Redux store. Initialize it as an empty array if needed.
 
   const items = useSelector((state) => state.allCart.items) || [];
@@ -77,6 +76,32 @@ const Featured = () => {
   const handleWhislist = (item) => {
     dispatch(addFav(item));
   };
+
+  const [loading, setLoading] = useState(true);
+  const [featuredProduct, setFeaturedProduct] = useState([]);
+  const getFeaturedProd = async () => {
+    setLoading(true);
+    try {
+      const response = await fetch(
+        `http://localhost:5000/api/prod/v1/getproduct?productFeatured=${props.setFeaturedProd}`
+      );
+      const res = await response.json();
+      console.log(res);
+      if (res.success) {
+        setFeaturedProduct(res.findByFeatures);
+        setLoading(false);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    getFeaturedProd();
+  }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
   return (
     <>
       <Container fluid className="con allcategories_container">
@@ -90,70 +115,71 @@ const Featured = () => {
             modules={[Autoplay, Pagination]}
             className="mySwiper AllCategories"
           >
-            {items.map((item) => (
-              <SwiperSlide key={item.id} className="swiper-card-allcategories">
-                <Col>
-                  <Card className="allcategories_card">
-                    <div className="iamges-categories">
-                      <p>{item.category}</p>
-                      <h4 className="text-center">{item.title}</h4>
-                      <CardImg
-                        src={item.img}
-                        alt="..."
-                        style={{ objectFit: "cover" }}
-                      />
-                    </div>
-                    <div className="Box-icons2">
-                      <div className="content-box-cart2">
-                        <Tooltip placement="left" title="Add To Cart">
-                          <p onClick={() => handleAddToCartMain(item)}>
-                            <i className="bi bi-cart4"></i>
-                          </p>
-                        </Tooltip>
+            {featuredProduct &&
+              featuredProduct.map((item, index) => (
+                <SwiperSlide key={index} className="swiper-card-allcategories">
+                  <Col>
+                    <Card className="allcategories_card">
+                      <NavLink to={`cartClickData/${item._id}`}>
+                        <div className="iamges-categories">
+                          <p>{item.category}</p>
+                          <h4 className="text-center">{item.prodTitle}</h4>
+                          <img
+                            src={`http://localhost:5000/${item?.prodImg1}`}
+                            alt={item.prodTitle}
+                            style={{ objectFit: "cover" }}
+                            id="img1"
+                          />
+                          <img
+                            src={`http://localhost:5000/${item?.prodImg2}`}
+                            alt={item.prodTitle}
+                            style={{ objectFit: "cover" }}
+                            id="img2"
+                          />
+                        </div>
+                      </NavLink>
+                      <div className="Box-icons2">
+                        <div className="content-box-cart2">
+                          <Tooltip placement="left" title="Add To Cart">
+                            <p onClick={() => handleAddToCartMain(item)}>
+                              <i className="bi bi-cart4"></i>
+                            </p>
+                          </Tooltip>
 
-                        <Tooltip placement="left" title="Quick View">
-                          <p onClick={() => openModal(item)}>
-                            <i className="bi bi-info"></i>
-                          </p>
-                        </Tooltip>
-                        <Tooltip placement="left" title="Wish List">
-                          <p onClick={() => handleWhislist(item)}>
-                            <i className="bi bi-heart"></i>
-                          </p>
-                        </Tooltip>
-
-                        <Tooltip placement="left" title="View Item">
-                          <p>
-                            <NavLink to={`cartClickData/${item.id}`}>
-                              <i className="bi bi-eye text-white"></i>
-                            </NavLink>
-                          </p>
-                        </Tooltip>
+                          <Tooltip
+                            placement="left"
+                            title="Quick View"
+                            onClick={() => openModal(item)}
+                          >
+                            <p>
+                              <i className="bi bi-info"></i>
+                            </p>
+                          </Tooltip>
+                          <Tooltip placement="left" title="Wish List">
+                            <p onClick={() => handleWhislist(item)}>
+                              <i className="bi bi-heart"></i>
+                            </p>
+                          </Tooltip>
+                          <NavLink to={`cartClickData/${item._id}`}>
+                            <Tooltip placement="left" title="View Item">
+                              <p>
+                                <i className="bi bi-eye text-white"></i>
+                              </p>
+                            </Tooltip>
+                          </NavLink>
+                        </div>
                       </div>
-                    </div>
-                    <div className="details-card-item text-center">
-                      <h4>Rs {item.price}</h4>
-                      <p className="Ratings">{item.ratingStarsIcons}</p>
-                      <div className=" d-flex justify-content-center gap-2">
-                        <p className="pt-1">Color:</p>
-                        {item.availableColors &&
-                          Array.isArray(item.availableColors) && (
-                            <div className="colors-container">
-                              {item.availableColors.map((colorObj, index) => (
-                                <div
-                                  key={index}
-                                  className="color-box"
-                                  style={{ backgroundColor: colorObj.boxColor }}
-                                ></div>
-                              ))}
-                            </div>
-                          )}
+                      <div className="details-card-item text-center">
+                        <h4>Rs {item.prodPrice} </h4>
+                        <p className="Ratings">{item.ratingStarsIcons}</p>
+                        <div className=" d-flex justify-content-center gap-2">
+                          <p className="pt-1">Color:{item.prodColor}</p>
+                        </div>
                       </div>
-                    </div>
-                  </Card>
-                </Col>
-              </SwiperSlide>
-            ))}
+                    </Card>
+                  </Col>
+                </SwiperSlide>
+              ))}
           </Swiper>
         </Row>
       </Container>

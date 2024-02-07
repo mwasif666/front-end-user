@@ -94,8 +94,8 @@ const ProductCard = () => {
             {product.map((item) => (
               <SwiperSlide key={item._id} className="swiper-card-allcategories">
                 <Col>
-                  <NavLink to={`cartClickData/${item._id}`}>
-                    <Card className="allcategories_card">
+                  <Card className="allcategories_card">
+                    <NavLink to={`cartClickData/${item._id}`}>
                       <div className="iamges-categories">
                         <p>{item.category}</p>
                         <h4 className="text-center">{item.prodTitle}</h4>
@@ -112,43 +112,46 @@ const ProductCard = () => {
                           id="img2"
                         />
                       </div>
-                      <div className="Box-icons2">
-                        <div className="content-box-cart2">
-                          <Tooltip placement="left" title="Add To Cart">
-                            <p onClick={() => handleAddToCartMain(item)}>
-                              <i className="bi bi-cart4"></i>
-                            </p>
-                          </Tooltip>
-
-                          <Tooltip placement="left" title="Quick View">
-                            <p onClick={() => openModal(item)}>
-                              <i className="bi bi-info"></i>
-                            </p>
-                          </Tooltip>
-                          <Tooltip placement="left" title="Wish List">
-                            <p onClick={() => handleWhislist(item)}>
-                              <i className="bi bi-heart"></i>
-                            </p>
-                          </Tooltip>
-
-                          {/* <Tooltip placement="left" title="View Item">
-                          <p>
-                           
-                              <i className="bi bi-eye text-white"></i>
-                            </NavLink>
+                    </NavLink>
+                    <div className="Box-icons2">
+                      <div className="content-box-cart2">
+                        <Tooltip placement="left" title="Add To Cart">
+                          <p onClick={() => handleAddToCartMain(item)}>
+                            <i className="bi bi-cart4"></i>
                           </p>
-                        </Tooltip> */}
-                        </div>
+                        </Tooltip>
+
+                        <Tooltip
+                          placement="left"
+                          title="Quick View"
+                          onClick={() => openModal(item)}
+                        >
+                          <p>
+                            <i className="bi bi-info"></i>
+                          </p>
+                        </Tooltip>
+                        <Tooltip placement="left" title="Wish List">
+                          <p onClick={() => handleWhislist(item)}>
+                            <i className="bi bi-heart"></i>
+                          </p>
+                        </Tooltip>
+                        <NavLink to={`cartClickData/${item._id}`}>
+                          <Tooltip placement="left" title="View Item">
+                            <p>
+                              <i className="bi bi-eye text-white"></i>
+                            </p>
+                          </Tooltip>
+                        </NavLink>
                       </div>
-                      <div className="details-card-item text-center">
-                        <h4>Rs {item.prodPrice} </h4>
-                        <p className="Ratings">{item.ratingStarsIcons}</p>
-                        <div className=" d-flex justify-content-center gap-2">
-                          <p className="pt-1">Color:{item.prodColor}</p>
-                        </div>
+                    </div>
+                    <div className="details-card-item text-center">
+                      <h4>Rs {item.prodPrice} </h4>
+                      <p className="Ratings">{item.ratingStarsIcons}</p>
+                      <div className=" d-flex justify-content-center gap-2">
+                        <p className="pt-1">Color:{item.prodColor}</p>
                       </div>
-                    </Card>
-                  </NavLink>
+                    </div>
+                  </Card>
                 </Col>
               </SwiperSlide>
             ))}
