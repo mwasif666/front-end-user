@@ -26,7 +26,6 @@ function CheckoutForm() {
     dispatch(getCartTotal());
   }, [cart]);
 
-  console.log("mdhasdgsa", authToken);
   const formik = useFormik({
     initialValues: {
       orderDetails: [
