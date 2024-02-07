@@ -115,7 +115,7 @@ const Top20 = (props) => {
             modules={[Autoplay, Pagination]}
             className="mySwiper AllCategories"
           >
-            {Array.isArray(featuredProduct) &&
+            {featuredProduct &&
               featuredProduct.map((item, index) => (
                 <SwiperSlide key={index} className="swiper-card-allcategories">
                   <Col>
