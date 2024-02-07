@@ -23,6 +23,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getCartTotal } from "../../features/cartSlice";
 import DropdownLink from "./Dropdown-menu";
 import { AuthContext } from "../../context/AuthContext";
+import ProductCard from "../ProductCard";
 
 function Nav_Bar() {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -41,7 +42,18 @@ function Nav_Bar() {
   useEffect(() => {
     dispatch(getCartTotal());
   }, [cart]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [showDropdown, setShowDropdown] = useState(false);
 
+  const handleSearch = (e) => {
+    const query = e.target.value.toLowerCase();
+    setSearchQuery(query);
+    if (query.trim() !== "") {
+      setShowDropdown(true);
+    } else {
+      setShowDropdown(false);
+    }
+  };
   return (
     <>
       <section className="section">
@@ -63,7 +75,7 @@ function Nav_Bar() {
                 <i class="bi bi-geo-alt"></i>
                 <p id="location">Store Location</p>
               </div>
-                <p id="line">|</p>
+              <p id="line">|</p>
               {authToken === null ? (
                 <div className="box4">
                   <i class="bi bi-person"></i>
@@ -84,11 +96,20 @@ function Nav_Bar() {
               />
             </Navbar.Brand>
           </Link>
-          <Form className="Form-control m-auto">
-            <input type="search" placeholder="Search" />
-            <i class="bi bi-search"></i>
-          </Form>
-
+          <div className="search-bar">
+            <input
+              type="text"
+              placeholder="Search"
+              value={searchQuery}
+              onChange={handleSearch}
+            />
+            <i className="bi bi-search"></i>
+          </div>
+          {showDropdown && (
+            <div className="search-results-dropdown">
+              <ProductCard searchQuery={searchQuery} />
+            </div>
+          )}
           <Row className="icons-navbar">
             <Col className="px-4">
               <Tooltip title="Wishlist" arrow className="icons-mui">

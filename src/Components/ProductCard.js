@@ -16,7 +16,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { addFav } from "../features/favCartSlice";
 import { AuthContext } from "../context/AuthContext";
-const ProductCard = () => {
+const ProductCard = ({ searchQuery }) => {
   // Fetch items from the Redux store. Initialize it as an empty array if needed.
 
   const { items } = useSelector((state) => state.allCart) || [];
@@ -83,10 +83,80 @@ const ProductCard = () => {
   if (isLoading) {
     return <div>Loading...</div>;
   }
-
+  const filteredProducts = product.filter(
+    (item) =>
+      item &&
+      item.prodTitle &&
+      item.prodTitle.toLowerCase()?.includes(searchQuery?.toLowerCase())
+  );
   return (
     <>
       <ToastContainer />
+      <Container fluid className="con allcategories_container">
+        <Row className="swiper-card-allcategorie">
+          <Col>
+            {filteredProducts.map((item) => (
+              <div key={item._id} className="swiper-card-allcategories">
+                <Col>
+                  <Card className="allcategories_card">
+                    <div className="iamges-categories">
+                      <p>{item.category}</p>
+                      <h4 className="text-center">{item.prodTitle}</h4>
+                      <img
+                        src={`http://localhost:5000/${item?.prodImg1}`}
+                        alt={item.prodTitle}
+                        style={{ objectFit: "cover" }}
+                        id="img1"
+                      />
+                      <img
+                        src={`http://localhost:5000/${item?.prodImg2}`}
+                        alt={item.prodTitle}
+                        style={{ objectFit: "cover" }}
+                        id="img2"
+                      />
+                    </div>
+                    <div className="Box-icons2">
+                      <div className="content-box-cart2">
+                        <Tooltip placement="left" title="Add To Cart">
+                          <p onClick={() => handleAddToCartMain(item)}>
+                            <i className="bi bi-cart4"></i>
+                          </p>
+                        </Tooltip>
+
+                        <Tooltip placement="left" title="Quick View">
+                          <p onClick={() => openModal(item)}>
+                            <i className="bi bi-info"></i>
+                          </p>
+                        </Tooltip>
+                        <Tooltip placement="left" title="Wish List">
+                          <p onClick={() => handleWhislist(item)}>
+                            <i className="bi bi-heart"></i>
+                          </p>
+                        </Tooltip>
+
+                        <Tooltip placement="left" title="View Item">
+                          <p>
+                            <NavLink to={`cartClickData/${item._id}`}>
+                              <i className="bi bi-eye text-white"></i>
+                            </NavLink>
+                          </p>
+                        </Tooltip>
+                      </div>
+                    </div>
+                    <div className="details-card-item text-center">
+                      <h4>Rs {item.prodPrice} </h4>
+                      <p className="Ratings">{item.ratingStarsIcons}</p>
+                      <div className=" d-flex justify-content-center gap-2">
+                        <p className="pt-1">Color:{item.prodColor}</p>
+                      </div>
+                    </div>
+                  </Card>
+                </Col>
+              </div>
+            ))}
+          </Col>
+        </Row>
+      </Container>
       <Container fluid className="con allcategories_container">
         <Row className="swiper-card-allcategorie">
           <Swiper
