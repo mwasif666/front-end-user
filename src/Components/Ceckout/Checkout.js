@@ -129,7 +129,7 @@ function CheckoutForm() {
             <div className="col-xl-7 col-lg-7 mb-4">
               <div className="card shadow-0 border">
                 <div className="p-4">
-                  <h5 className="card-title mb-3">Guest checkout</h5>
+                  <h5 className="card-title mb-3">Checkout</h5>
                   <div className="row">
                     <div className="col-12 mb-3">
                       <p className="mb-0">First name</p>
@@ -238,7 +238,6 @@ function CheckoutForm() {
                             type="radio"
                             name="flexRadioDefault"
                             id="flexRadioDefault1"
-                            checked
                           />
                           <label
                             className="form-check-label"
@@ -267,7 +266,7 @@ function CheckoutForm() {
                           >
                             Post office <br />
                             <small className="text-muted">
-                              20-30 days via post{" "}
+                              20-30 days via post
                             </small>
                           </label>
                         </div>
@@ -288,7 +287,7 @@ function CheckoutForm() {
                           >
                             Self pick-up <br />
                             <small className="text-muted">
-                              Come to our shop{" "}
+                              Come to our shop
                             </small>
                           </label>
                         </div>
@@ -426,7 +425,7 @@ function CheckoutForm() {
                       Cancel
                     </button>
                     <button className="btn btn-success shadow-0 border">
-                      Continue
+                      Place Order
                     </button>
                   </div>
                 </div>

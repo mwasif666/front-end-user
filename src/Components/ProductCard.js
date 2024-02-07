@@ -87,31 +87,30 @@ const ProductCard = ({ searchQuery }) => {
     <>
       <ToastContainer />
       <Container fluid className="con allcategories_container filter-Product">
-        <Row className="swiper-card-allcategorie">
-          <Col>
-            {filteredProducts.map((item) => (
-              <div key={item._id} className="swiper-card-allcategories">
-                <Col>
-                  <Card className="allcategories_card">
-                    <div className="iamges-categories">
-                      <p>{item.category}</p>
-                      <h4 className="text-center">{item.prodTitle}</h4>
-                      <img
-                        src={`http://localhost:5000/${item?.prodImg1}`}
-                        alt={item.prodTitle}
-                        style={{ objectFit: "cover" }}
-                        id="img1"
-                      />
-                      <img
-                        src={`http://localhost:5000/${item?.prodImg2}`}
-                        alt={item.prodTitle}
-                        style={{ objectFit: "cover" }}
-                        id="img2"
-                      />
-                    </div>
-                    <div className="Box-icons2">
-                      <div className="content-box-cart2">
-                        <Tooltip placement="left" title="Add To Cart">
+        <Row>
+          {filteredProducts.map((item) => (
+            <Col key={item._id}>
+              <NavLink to={`cartClickData/${item._id}`}>
+                <Card className="allcategories_card ">
+                  <div className="iamges-categories">
+                    <p>{item.category}</p>
+                    <h4 className="text-center">{item.prodTitle}</h4>
+                    <img
+                      src={`http://localhost:5000/${item?.prodImg1}`}
+                      alt={item.prodTitle}
+                      style={{ objectFit: "cover" }}
+                      id="img1"
+                    />
+                    <img
+                      src={`http://localhost:5000/${item?.prodImg2}`}
+                      alt={item.prodTitle}
+                      style={{ objectFit: "cover" }}
+                      id="img2"
+                    />
+                  </div>
+                  <div className="Box-icons2">
+                    <div className="content-box-cart2">
+                      {/* <Tooltip placement="left" title="Add To Cart">
                           <p onClick={() => handleAddToCartMain(item)}>
                             <i className="bi bi-cart4"></i>
                           </p>
@@ -126,29 +125,28 @@ const ProductCard = ({ searchQuery }) => {
                           <p onClick={() => handleWhislist(item)}>
                             <i className="bi bi-heart"></i>
                           </p>
-                        </Tooltip>
+                        </Tooltip> */}
 
-                        <Tooltip placement="left" title="View Item">
-                          <p>
-                            <NavLink to={`cartClickData/${item._id}`}>
-                              <i className="bi bi-eye text-white"></i>
-                            </NavLink>
-                          </p>
-                        </Tooltip>
-                      </div>
+                      {/* <NavLink to={`cartClickData/${item._id}`}>
+                      <Tooltip placement="left" title="View Item">
+                        <p>
+                          <i className="bi bi-eye text-white"></i>
+                        </p>
+                      </Tooltip>
+                    </NavLink> */}
                     </div>
-                    <div className="details-card-item text-center">
+                  </div>
+                  {/* <div className="details-card-item text-center">
                       <h4>Rs {item.prodPrice} </h4>
                       <p className="Ratings">{item.ratingStarsIcons}</p>
                       <div className=" d-flex justify-content-center gap-2">
                         <p className="pt-1">Color:{item.prodColor}</p>
                       </div>
-                    </div>
-                  </Card>
-                </Col>
-              </div>
-            ))}
-          </Col>
+                    </div> */}
+                </Card>
+              </NavLink>
+            </Col>
+          ))}
         </Row>
       </Container>
 

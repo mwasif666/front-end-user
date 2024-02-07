@@ -94,59 +94,61 @@ const ProductCard = () => {
             {product.map((item) => (
               <SwiperSlide key={item._id} className="swiper-card-allcategories">
                 <Col>
-                  <Card className="allcategories_card">
-                    <div className="iamges-categories">
-                      <p>{item.category}</p>
-                      <h4 className="text-center">{item.prodTitle}</h4>
-                      <img
-                        src={`http://localhost:5000/${item?.prodImg1}`}
-                        alt={item.prodTitle}
-                        style={{ objectFit: "cover" }}
-                        id="img1"
-                      />
-                      <img
-                        src={`http://localhost:5000/${item?.prodImg2}`}
-                        alt={item.prodTitle}
-                        style={{ objectFit: "cover" }}
-                        id="img2"
-                      />
-                    </div>
-                    <div className="Box-icons2">
-                      <div className="content-box-cart2">
-                        <Tooltip placement="left" title="Add To Cart">
-                          <p onClick={() => handleAddToCartMain(item)}>
-                            <i className="bi bi-cart4"></i>
-                          </p>
-                        </Tooltip>
+                  <NavLink to={`cartClickData/${item._id}`}>
+                    <Card className="allcategories_card">
+                      <div className="iamges-categories">
+                        <p>{item.category}</p>
+                        <h4 className="text-center">{item.prodTitle}</h4>
+                        <img
+                          src={`http://localhost:5000/${item?.prodImg1}`}
+                          alt={item.prodTitle}
+                          style={{ objectFit: "cover" }}
+                          id="img1"
+                        />
+                        <img
+                          src={`http://localhost:5000/${item?.prodImg2}`}
+                          alt={item.prodTitle}
+                          style={{ objectFit: "cover" }}
+                          id="img2"
+                        />
+                      </div>
+                      <div className="Box-icons2">
+                        <div className="content-box-cart2">
+                          <Tooltip placement="left" title="Add To Cart">
+                            <p onClick={() => handleAddToCartMain(item)}>
+                              <i className="bi bi-cart4"></i>
+                            </p>
+                          </Tooltip>
 
-                        <Tooltip placement="left" title="Quick View">
-                          <p onClick={() => openModal(item)}>
-                            <i className="bi bi-info"></i>
-                          </p>
-                        </Tooltip>
-                        <Tooltip placement="left" title="Wish List">
-                          <p onClick={() => handleWhislist(item)}>
-                            <i className="bi bi-heart"></i>
-                          </p>
-                        </Tooltip>
+                          <Tooltip placement="left" title="Quick View">
+                            <p onClick={() => openModal(item)}>
+                              <i className="bi bi-info"></i>
+                            </p>
+                          </Tooltip>
+                          <Tooltip placement="left" title="Wish List">
+                            <p onClick={() => handleWhislist(item)}>
+                              <i className="bi bi-heart"></i>
+                            </p>
+                          </Tooltip>
 
-                        <Tooltip placement="left" title="View Item">
+                          {/* <Tooltip placement="left" title="View Item">
                           <p>
-                            <NavLink to={`cartClickData/${item._id}`}>
+                           
                               <i className="bi bi-eye text-white"></i>
                             </NavLink>
                           </p>
-                        </Tooltip>
+                        </Tooltip> */}
+                        </div>
                       </div>
-                    </div>
-                    <div className="details-card-item text-center">
-                      <h4>Rs {item.prodPrice} </h4>
-                      <p className="Ratings">{item.ratingStarsIcons}</p>
-                      <div className=" d-flex justify-content-center gap-2">
-                        <p className="pt-1">Color:{item.prodColor}</p>
+                      <div className="details-card-item text-center">
+                        <h4>Rs {item.prodPrice} </h4>
+                        <p className="Ratings">{item.ratingStarsIcons}</p>
+                        <div className=" d-flex justify-content-center gap-2">
+                          <p className="pt-1">Color:{item.prodColor}</p>
+                        </div>
                       </div>
-                    </div>
-                  </Card>
+                    </Card>
+                  </NavLink>
                 </Col>
               </SwiperSlide>
             ))}
@@ -218,6 +220,8 @@ const ProductCard = () => {
                     <p>{selectedItem?.prodDesc}</p>
                     <h6>Color: {selectedItem?.prodColor}</h6>
                   </div>
+                </div>
+                <div className="buttons">
                   {selectedItem && selectedItem.quantity !== undefined ? (
                     <div className="col-lg-12 col-md-6 mb-4 mb-lg-0 d-flex gap-4">
                       <div
@@ -251,14 +255,14 @@ const ProductCard = () => {
                       <div className="increase-decrese-2 ">
                         <button
                           className="modal-cart-button btn"
-                          onClick={handleAddToCart}
+                          onClick={() => dispatch(addToCart(selectedItem))}
                         >
                           <p>Add To Cart</p>
                           <i className="bi bi-cart4"></i>
                         </button>
                       </div>
                       <p className="text-start text-md-center d-none">
-                        <strong>{selectedItem.prodPrice}</strong>
+                        <strong>{selectedItem.price}</strong>
                       </p>
                     </div>
                   ) : null}

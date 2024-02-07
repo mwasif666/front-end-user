@@ -63,12 +63,12 @@ export default function TopItem() {
       </Box>
       <CustomTabPanel value={value} index={0}>
         <Best_Sellers setFeaturedProd={"electronic"} />
-      </CustomTabPanel >
+      </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-        <Best_Sellers setFeaturedProd={"electronic"}/>
+        <Best_Sellers setFeaturedProd={"electronic"} />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
-        <Best_Sellers setFeaturedProd={"electronic"}/>
+        <Best_Sellers setFeaturedProd={"electronic"} />
       </CustomTabPanel>
     </Box>
   );
