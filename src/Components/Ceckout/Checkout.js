@@ -327,9 +327,6 @@ function CheckoutForm() {
                       <input
                         type="text"
                         className="form-control placeholder-active"
-                        value={formik.values.country}
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
                       />
                     </div>
 
@@ -366,9 +363,6 @@ function CheckoutForm() {
                           type="text"
                           id="typeText"
                           className="form-control placeholder-active"
-                          value={formik.values.zipCode}
-                          onChange={formik.handleChange}
-                          onBlur={formik.handleBlur}
                         />
                         <div className="form-notch">
                           <div
@@ -493,7 +487,7 @@ function CheckoutForm() {
                         data-mdb-ripple-color="light"
                       >
                         <img
-                          src={`http://localhost:5000/${data?.prodImg1}`}
+                          src={data?.prodImg1}
                           alt={data.prodTitle}
                           className="w-100"
                         />

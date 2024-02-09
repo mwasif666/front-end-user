@@ -79,7 +79,7 @@ const CartClickData = () => {
             <div className="row">
               <div className="col-md-4">
                 <img
-                  src={`http://localhost:5000/${productDetails?.prodImg1}`}
+                  src={productDetails?.prodImg1}
                   alt={productDetails.prodTitle}
                   height={500}
                 />
@@ -100,7 +100,7 @@ const CartClickData = () => {
                     </div>
                     <div className="ratings-modal-sub-2 ps-4">
                       <img
-                        src={`http://localhost:5000/${productDetails?.prodImg1}`}
+                        src={productDetails.prodImg1}
                         alt={productDetails.prodTitle}
                       />
                     </div>

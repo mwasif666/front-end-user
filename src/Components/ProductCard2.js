@@ -100,13 +100,13 @@ const ProductCard = () => {
                         <p>{item.category}</p>
                         <h4 className="text-center">{item.prodTitle}</h4>
                         <img
-                          src={`http://localhost:5000/${item?.prodImg1}`}
+                          src={item?.prodImg1}
                           alt={item.prodTitle}
                           style={{ objectFit: "cover" }}
                           id="img1"
                         />
                         <img
-                          src={`http://localhost:5000/${item?.prodImg2}`}
+                          src={item?.prodImg2}
                           alt={item.prodTitle}
                           style={{ objectFit: "cover" }}
                           id="img2"
