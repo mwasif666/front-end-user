@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import { useFormik } from "formik"; // Correct import statement
-import * as Yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
 import { useContext, useEffect } from "react";
 import {
@@ -16,6 +14,21 @@ import { Navigate } from "react-router-dom";
 
 function CheckoutForm() {
   const { authToken, user } = useContext(AuthContext);
+  const [cusName, setCusName] = useState(user?.userName);
+  const [email, setEmail] = useState(user?.email);
+  const [shippingAddress, setShippingAddress] = useState("");
+  const [phoneNo, setPhoneNo] = useState("");
+  const [country, setCountry] = useState("");
+  const [zipCode, setZipCode] = useState("");
+  const [city, setCity] = useState("");
+
+  const handleChange = (e) => {
+    if (e.target.name === "shippingAddress") setShippingAddress(e.target.value);
+    if (e.target.name === "phoneNo") setPhoneNo(e.target.value);
+    if (e.target.name === "country") setCountry(e.target.value);
+    if (e.target.name === "zipCode") setZipCode(e.target.value);
+    if (e.target.name === "city") setCity(e.target.value);
+  };
 
   const navigate = useNavigate();
   const { cart, totalQuantity, totalPrice } = useSelector(
@@ -25,72 +38,54 @@ function CheckoutForm() {
   useEffect(() => {
     dispatch(getCartTotal());
   }, [cart]);
-
-  const formik = useFormik({
-    initialValues: {
-      orderDetails: [
+  
+  const handlePlaceOrder = async (e) => {
+    alert(cart)
+    try {
+      const response = await fetch(
+        "http://localhost:5000/api/order/v1/placeorder",
         {
-          productName: cart?.prodTitle,
-          productPrice: cart?.prodPrice,
-          productColor: cart?.prodColor,
-          productCategory: cart?.prodCategory,
-          productFeature: cart?.productFeatured,
-          ProductQty: cart?.prodQty,
-        },
-      ],
-      cusName: user?.userName || " ", // Use optional chaining to handle null
-      email: user?.email || " ",
-      phoneNo: 0,
-      totalPrice: totalPrice || " ",
-      totalQty: totalQuantity || " ",
-      zipCode: 0,
-      country: "",
-      city: "",
-      shippingAddress: "",
-    },
-    validationSchema: Yup.object({
-      cusName: Yup.string().required("UserName is required"),
-      email: Yup.string()
-        .email("Invalid email address")
-        .required("Email is required"),
-      phoneNo: Yup.string().required("Phone number is required"),
-      zipCode: Yup.number()
-        .required("Zip Code is required")
-        .positive("Zip Code must be positive"),
-      country: Yup.string().required("Country is required"),
-      shippingAddress: Yup.string().required("Shipping Address is required"),
-    }),
-
-    onSubmit: async (values) => {
-      alert("dsadasd")
-      try {
-        const response = await fetch(
-          "http://localhost:5000/api/order/v1/placeorder",
-          {
-            method: "POST",
-            headers: {
-              "auth-token": authToken,
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(values),
-          }
-        );
-        const data = await response.json();
-        console.log(data);
-        if (data.success) {
-          formik.resetForm();
-          alert("Place Order ");
-          navigate("/");
-          dispatch(setEmptyCart());
-        } else {
-          alert(data.message || "Failed to add food.");
+          method: "POST",
+          headers: {
+            "auth-token": authToken,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            cusName,
+            email,
+            phoneNo,
+            country,
+            zipCode,
+            city,
+            shippingAddress,
+            orderStatus: "Pending",
+            totalPrice: promoCode ? numberTotal : totalPrice,
+            totalQty: totalQuantity,
+            orderDetails: cart.map((item) => ({
+              productName: item.prodTitle,
+              productPrice: item.prodPrice,
+              productColor: item.prodColor,
+              productCategory: item.prodCategory,
+              productFeature: item.productFeatured,
+              ProductQty: item.prodQty,
+            })),
+          }),
         }
-      } catch (error) {
-        console.log(error);
-        console.error("Error adding food:", error);
+      );
+ 
+      const data = await response.json();
+      if (data.success) {
+        alert("Place Order ");
+        navigate("/");
+        dispatch(setEmptyCart());
+      } else {
+        alert(data.message || "Failed to add food.");
       }
-    },
-  });
+    } catch (error) {
+      console.log(error);
+      console.error("Error adding food:", error);
+    }
+  };
   const [promoCode, setPromoCode] = useState("");
   const [numberTotal, setNumberTotal] = useState(0);
   useEffect(() => {
@@ -138,16 +133,10 @@ function CheckoutForm() {
                           id="typeText"
                           placeholder="Type here"
                           className="form-control placeholder-active"
-                          value={formik.values.cusName}
-                          onChange={formik.handleChange}
-                          onBlur={formik.handleBlur}
+                          value={cusName}
+                          onChange={handleChange}
                           disabled
                         />
-                        {formik.touched.cusName && formik.errors.cusName && (
-                          <p className="text-yellow-500 mt-1">
-                            {formik.errors.cusName}
-                          </p>
-                        )}
                         <div className="form-notch">
                           <div
                             className="form-notch-leading"
@@ -171,11 +160,10 @@ function CheckoutForm() {
                             type="tel"
                             id="typePhone"
                             className="form-control"
-                            name="phoneNo"
                             placeholder="Enter your phone number"
-                            value={formik.values.phoneNo}
-                            onChange={formik.handleChange}
-                            onBlur={formik.handleBlur}
+                            name="phoneNo" // Connect to formik state
+                            value={phoneNo}
+                            onChange={handleChange}
                           />
                         </div>
                       </div>
@@ -189,15 +177,9 @@ function CheckoutForm() {
                           id="typeEmail"
                           placeholder="example@gmail.com"
                           className="form-control placeholder-active"
-                          value={formik.values.email}
-                          onChange={formik.handleChange}
-                          onBlur={formik.handleBlur}
+                          value={email}
+                          onChange={handleChange}
                         />
-                        {formik.touched.email && formik.errors.email && (
-                          <p className="text-yellow-500 mt-1">
-                            {formik.errors.email}
-                          </p>
-                        )}
                         <div className="form-notch">
                           <div
                             className="form-notch-leading"
@@ -305,9 +287,32 @@ function CheckoutForm() {
                           placeholder="Type here"
                           className="form-control placeholder-active"
                           name="shippingAddress"
-                          value={formik.values.shippingAddress}
-                          onChange={formik.handleChange}
-                          onBlur={formik.handleBlur}
+                          value={shippingAddress}
+                          onChange={handleChange}
+                        />
+                        <div className="form-notch">
+                          <div
+                            className="form-notch-leading"
+                            style={{ width: "9px" }}
+                          ></div>
+                          <div
+                            className="form-notch-middle"
+                            style={{ width: "0px" }}
+                          ></div>
+                          <div className="form-notch-trailing"></div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-sm-4 mb-3">
+                      <p className="mb-0">Country</p>
+                      <div className="form-outline">
+                        <input
+                          type="text"
+                          id="country"
+                          className="form-control placeholder-active"
+                          name="country" // Connect to formik state
+                          value={country}
+                          onChange={handleChange}
                         />
                         <div className="form-notch">
                           <div
@@ -323,25 +328,16 @@ function CheckoutForm() {
                       </div>
                     </div>
 
-                    <div className="col-sm-4 mb-3">
-                      <p className="mb-0">Country</p>
-                      <input
-                        type="text"
-                        className="form-control placeholder-active"
-                      />
-                    </div>
-
                     <div className="col-sm-6 col-6 mb-3">
                       <p className="mb-0">City</p>
                       <div className="form-outline">
                         <input
                           type="text"
-                          id="typeText"
+                          id="city"
                           className="form-control placeholder-active"
                           name="city"
-                          value={formik.values.city}
-                          onChange={formik.handleChange}
-                          onBlur={formik.handleBlur}
+                          value={city}
+                          onChange={handleChange}
                         />
                         <div className="form-notch">
                           <div
@@ -362,8 +358,11 @@ function CheckoutForm() {
                       <div className="form-outline">
                         <input
                           type="text"
-                          id="typeText"
+                          id="zipCode"
                           className="form-control placeholder-active"
+                          name="zipCode" // Connect to formik state
+                          value={zipCode}
+                          onChange={handleChange}
                         />
                         <div className="form-notch">
                           <div
@@ -418,7 +417,10 @@ function CheckoutForm() {
                     <button className="btn btn-light border me-2">
                       Cancel
                     </button>
-                    <button className="btn btn-success shadow-0 border">
+                    <button
+                      className="btn btn-success shadow-0 border"
+                      onClick={handlePlaceOrder}
+                    >
                       Place Order
                     </button>
                   </div>
