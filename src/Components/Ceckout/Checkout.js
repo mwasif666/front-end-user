@@ -62,6 +62,7 @@ function CheckoutForm() {
     }),
 
     onSubmit: async (values) => {
+      alert("dsadasd")
       try {
         const response = await fetch(
           "http://localhost:5000/api/order/v1/placeorder",
@@ -74,9 +75,8 @@ function CheckoutForm() {
             body: JSON.stringify(values),
           }
         );
-
         const data = await response.json();
-
+        console.log(data);
         if (data.success) {
           formik.resetForm();
           alert("Place Order ");
@@ -171,6 +171,7 @@ function CheckoutForm() {
                             type="tel"
                             id="typePhone"
                             className="form-control"
+                            name="phoneNo"
                             placeholder="Enter your phone number"
                             value={formik.values.phoneNo}
                             onChange={formik.handleChange}
