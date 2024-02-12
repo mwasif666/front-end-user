@@ -5,8 +5,6 @@ import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Featured from "./Featured";
-import OnSale from "./On_Sale";
-import TOPrate from "./TOPrate";
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -62,13 +60,13 @@ export default function FeaturedTabs() {
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
-        <Featured />
+        <Featured setFeaturedProd={"featured"} />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-        <TOPrate />
+        <Featured setFeaturedProd={"on-sale"} />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
-        <OnSale />
+        <Featured setFeaturedProd={"top-rated"} />
       </CustomTabPanel>
     </Box>
   );

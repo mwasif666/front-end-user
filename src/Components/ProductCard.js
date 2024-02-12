@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { addToCart, fetchProduct, getCartTotal } from "../features/cartSlice";
 import { Card, CardImg, Col, Container, Row } from "react-bootstrap";
 import { Swiper, SwiperSlide } from "swiper/react";
-// Import Swiper styles
 import "swiper/css";
 import { Autoplay, Pagination } from "swiper/modules";
 import Modal from "react-bootstrap/Modal";
@@ -16,26 +15,20 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { addFav } from "../features/favCartSlice";
 import { AuthContext } from "../context/AuthContext";
-const ProductCard = () => {
-  // Fetch items from the Redux store. Initialize it as an empty array if needed.
 
-  const {items } = useSelector((state) => state.allCart) || [];
+const ProductCard = ({ searchQuery }) => {
+  const { items } = useSelector((state) => state.allCart) || [];
   const dispatch = useDispatch();
-  // State for the modal
   const [show, setShow] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
-  const {isLoading , product} = useContext(AuthContext)
+  const { isLoading, product } = useContext(AuthContext);
 
-  // Function to open the modal and set the selected item
   const openModal = (item) => {
-    console.log("Opening modal with item:", item);
     setSelectedItem(item);
     setShow(true);
   };
- 
-  // Function to close the modal
+
   const closeModal = () => {
-    console.log("Closing modal");
     setSelectedItem(null);
     setShow(false);
   };
@@ -71,7 +64,6 @@ const ProductCard = () => {
   };
 
   const { cart } = useSelector((state) => state.allCart);
-  // Calculate the total quantity and price
   useEffect(() => {
     dispatch(getCartTotal());
   }, [cart]);
@@ -80,41 +72,45 @@ const ProductCard = () => {
     dispatch(addFav(item));
   };
 
-
-   if(isLoading){
-     return <div>Loading...</div>
+  if (isLoading) {
+    return <div>Loading...</div>;
   }
+
+  const filteredProducts = product.filter(
+    (item) =>
+      item &&
+      item.prodTitle &&
+      item.prodTitle.toLowerCase()?.includes(searchQuery?.toLowerCase())
+  );
 
   return (
     <>
       <ToastContainer />
-      <Container fluid className="con allcategories_container">
-        <Row className="swiper-card-allcategorie">
-          <Swiper
-            spaceBetween={30}
-            slidesPerView={4}
-            pagination={{
-              clickable: true,
-            }}
-            modules={[Autoplay, Pagination]}
-            className="mySwiper AllCategories"
-          >
-            {product.map((item) => (
-              <SwiperSlide key={item._id} className="swiper-card-allcategories">
-                <Col>
-                  <Card className="allcategories_card">
-                    <div className="iamges-categories">
-                      <p>{item.category}</p>
-                      <h4 className="text-center">{item.prodTitle}</h4>
-                      <img
-                        src={`http://localhost:5000/${item?.prodImg1}`}
-                        alt={item.prodTitle}
-                        style={{ objectFit: "cover" }}
-                      />
-                    </div>
-                    <div className="Box-icons2">
-                      <div className="content-box-cart2">
-                        <Tooltip placement="left" title="Add To Cart">
+      <Container fluid className="con allcategories_container filter-Product">
+        <Row>
+          {filteredProducts.map((item) => (
+            <Col key={item._id}>
+              <NavLink to={`cartClickData/${item._id}`}>
+                <Card className="allcategories_card ">
+                  <div className="iamges-categories">
+                    <p>{item.category}</p>
+                    <h4 className="text-center">{item.prodTitle}</h4>
+                    <img
+                      src={item?.prodImg1}
+                      alt={item.prodTitle}
+                      style={{ objectFit: "cover" }}
+                      id="img1"
+                    />
+                    <img
+                      src={item?.prodImg2}
+                      alt={item.prodTitle}
+                      style={{ objectFit: "cover" }}
+                      id="img2"
+                    />
+                  </div>
+                  <div className="Box-icons2">
+                    <div className="content-box-cart2">
+                      {/* <Tooltip placement="left" title="Add To Cart">
                           <p onClick={() => handleAddToCartMain(item)}>
                             <i className="bi bi-cart4"></i>
                           </p>
@@ -129,43 +125,31 @@ const ProductCard = () => {
                           <p onClick={() => handleWhislist(item)}>
                             <i className="bi bi-heart"></i>
                           </p>
-                        </Tooltip>
+                        </Tooltip> */}
 
-                        <Tooltip placement="left" title="View Item">
-                          <p>
-                            <NavLink to={`cartClickData/${item._id}`}>
-                              <i className="bi bi-eye text-white"></i>
-                            </NavLink>
-                          </p>
-                        </Tooltip>
-                      </div>
+                      {/* <NavLink to={`cartClickData/${item._id}`}>
+                      <Tooltip placement="left" title="View Item">
+                        <p>
+                          <i className="bi bi-eye text-white"></i>
+                        </p>
+                      </Tooltip>
+                    </NavLink> */}
                     </div>
-                    <div className="details-card-item text-center">
+                  </div>
+                  {/* <div className="details-card-item text-center">
                       <h4>Rs {item.prodPrice} </h4>
                       <p className="Ratings">{item.ratingStarsIcons}</p>
                       <div className=" d-flex justify-content-center gap-2">
                         <p className="pt-1">Color:{item.prodColor}</p>
-                        {/* {item.availableColors &&
-                          Array.isArray(item.availableColors) && (
-                            <div className="colors-container">
-                              {item.availableColors.map((colorObj, index) => (
-                                <div
-                                  key={index}
-                                  className="color-box"
-                                  style={{ backgroundColor: colorObj.boxColor }}
-                                ></div>
-                              ))}
-                            </div>
-                          )} */}
                       </div>
-                    </div>
-                  </Card>
-                </Col>
-              </SwiperSlide>
-            ))}
-          </Swiper>
+                    </div> */}
+                </Card>
+              </NavLink>
+            </Col>
+          ))}
         </Row>
       </Container>
+
       <Modal
         show={show}
         onHide={closeModal}
@@ -217,10 +201,12 @@ const ProductCard = () => {
                         <p>5 Reviews</p>
                       </div>
                       <div className="ratings-modal-sub-2 ps-4">
-                        <img src={`http://localhost:5000/${selectedItem?.prodImg1}`} />
+                        <i class="fa-solid fa-truck-fast"></i>
                       </div>
                       <div className="ratings-modal-sub-2">
-                        <p>8 sold in last 10 hours</p>
+                        <p>
+                          <span>{selectedItem?.prodQty}</span> Items in stock
+                        </p>
                       </div>
                     </div>
                   </div>

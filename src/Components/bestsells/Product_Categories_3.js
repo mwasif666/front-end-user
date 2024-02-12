@@ -24,7 +24,6 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   addToCart,
-  decreaseItemQuantity,
   getCartTotal,
 } from "../../features/cartSlice";
 import { Card, CardImg, Col, Container, Row } from "react-bootstrap";

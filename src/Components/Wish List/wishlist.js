@@ -5,6 +5,7 @@ import {
   removeItem2,
   selectWishlistItems,
   // selectWishlistTotal,
+  addToCart,
   decreaseItemQuantity2,
   increaseItemQuantity2,
   setFavProd,
@@ -12,12 +13,10 @@ import {
 import Recommented from "../Recoomended/Recommented";
 import { ToastContainer } from "react-toastify";
 
-
 const Wishlist = () => {
   const wishlistItems = useSelector(selectWishlistItems);
   // const wishlistTotal = useSelector(selectWishlistTotal);
   const dispatch = useDispatch();
-
 
   const handleIncreaseQuantity = (itemId) => {
     dispatch(increaseItemQuantity2(itemId));
@@ -26,10 +25,14 @@ const Wishlist = () => {
   const handleDecreaseQuantity = (itemId) => {
     dispatch(decreaseItemQuantity2(itemId));
   };
-
+  const handleAddToCartMain = (item) => {
+    if (item) {
+      dispatch(addToCart(item));
+    }
+  };
   useEffect(() => {
     dispatch(getCartTotal());
-    dispatch(setFavProd())
+    dispatch(setFavProd());
   }, [dispatch]);
 
   return (
@@ -46,7 +49,9 @@ const Wishlist = () => {
               }}
             >
               <h6>
-                <h5 className="mb-0">Wishlist - {wishlistItems?.length} items</h5>
+                <h5 className="mb-0">
+                  Wishlist - {wishlistItems?.length} items
+                </h5>
               </h6>
               <div className="card-body">
                 {!wishlistItems ? (
@@ -71,7 +76,7 @@ const Wishlist = () => {
                           data-mdb-ripple-color="light"
                         >
                           <img
-                            src={`http://localhost:5000/${item?.prodImg1}`}
+                            src={item?.prodImg1}
                             className="w-100"
                             alt="Blue Jeans Jacket"
                           />
@@ -117,7 +122,17 @@ const Wishlist = () => {
                             <i className="fas fa-plus"></i>
                           </button>
                         </div>
+                        <div className="increase-decrese-2 ">
+                          <button
+                            className="modal-cart-button btn"
+                            onClick={() => handleAddToCartMain(item)}
+                          >
+                            <p>Add To Cart</p>
+                            <i className="bi bi-cart4"></i>
+                          </button>
+                        </div>
                       </div>
+
                       <hr className="my-4" />
                     </div>
                   ))

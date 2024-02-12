@@ -13,10 +13,11 @@ import "../AllCategory/AllCategories.css";
 import Spinner from "react-bootstrap/Spinner";
 import Recommented from "../Recoomended/Recommented";
 import { AuthContext } from "../../context/AuthContext";
+import { ToastContainer } from "react-toastify";
 
 const CartClickData = () => {
   const items = useSelector((state) => state.allCart.items) || [];
-  const {setIsLoading , isLoading , product} = useContext(AuthContext)
+  const { setIsLoading, isLoading, product } = useContext(AuthContext);
   const dispatch = useDispatch();
   // State for the modal
   const [selectedItem, setSelectedItem] = useState(null);
@@ -24,18 +25,16 @@ const CartClickData = () => {
 
   // const selectedItem = location.state.selectedItem;
   const { id } = useParams();
-  
 
   useEffect(() => {
-    setIsLoading(true)
+    setIsLoading(true);
     // Fetch product details based on the ID and set it initially
     const check = product.find((x) => x._id === id);
     console.log(check);
     if (check) {
       setProductDetails(check);
       setSelectedItem({ ...check, quantity: 1 }); // Assuming a default quantity of 1
-      setIsLoading(false)
-    
+      setIsLoading(false);
     }
   }, []);
 
@@ -63,11 +62,12 @@ const CartClickData = () => {
     dispatch(getCartTotal());
   }, [cart]);
 
-  if(isLoading){
-    return <div>Loading...</div>
+  if (isLoading) {
+    return <div>Loading...</div>;
   }
   return (
     <div>
+      <ToastContainer />
       {/* Render the selected item data here */}
       {!productDetails ? (
         <Spinner animation="border" role="status">
@@ -78,7 +78,11 @@ const CartClickData = () => {
           <div className="img-clickdata">
             <div className="row">
               <div className="col-md-4">
-                <img src={`http://localhost:5000/${productDetails?.prodImg1}`} alt={productDetails.prodTitle} height={500} />
+                <img
+                  src={productDetails?.prodImg1}
+                  alt={productDetails.prodTitle}
+                  height={500}
+                />
               </div>
               <div className="col-md-7 pt-5">
                 <h1>{productDetails.prodTitle}</h1>
@@ -95,7 +99,10 @@ const CartClickData = () => {
                       <p>5 Reviews</p>
                     </div>
                     <div className="ratings-modal-sub-2 ps-4">
-                      <img src={`http://localhost:5000/${productDetails?.prodImg1}`} alt={productDetails.prodTitle} />
+                      <img
+                        src={productDetails.prodImg1}
+                        alt={productDetails.prodTitle}
+                      />
                     </div>
                     <div className="ratings-modal-sub-2">
                       <p>8 sold in last 10 hours</p>

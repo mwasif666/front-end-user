@@ -12,10 +12,7 @@
   height: 44vh;
 }
 .allcategories_card img {
-  width: 278px;
-  position: relative;
-  bottom: -16px;
-  left: 58px;
+  width: 221px;
 }
 .allcategories_card:hover .categories-img-1 {
   display: none;

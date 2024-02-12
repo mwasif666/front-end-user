@@ -1,0 +1,41 @@
+.accordion-button::after {
+  font-family: "Font Awesome 6 Free";
+  content: "\2b";
+  background-image: none;
+  transform: none;
+}
+.accordion-button:not(.collapsed)::after {
+  background: none;
+  font-family: "FontAwesome";
+  content: "\f068";
+  transform: none;
+}
+.filtering .border-1 {
+  border: 1px solid lightgrey;
+}
+.filtering label {
+  display: flex;
+  margin: 5px 0px;
+  gap: 10px;
+  font-size: 16px;
+}
+.input-filters-number input {
+  width: 140px;
+  height: 40px;
+}
+.input-filters-number {
+  gap: 20px;
+}
+.filtering #search-filter-input {
+  width: 300px;
+  height: 40px;
+}
+.allcategories_card-2 #img2 {
+  display: none;
+}
+.allcategories_card-2:hover #img2 {
+  display: inline-block;
+}
+.allcategories_card-2:hover #img1 {
+  display: none;
+}

@@ -55,7 +55,7 @@ const CartPage = () => {
                           data-mdb-ripple-color="light"
                         >
                           <img
-                            src={`http://localhost:5000/${data?.prodImg1}`}
+                            src={data?.prodImg1}
                             alt={data.prodTitle}
                             className="w-100"
                           />

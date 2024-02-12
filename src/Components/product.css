@@ -132,3 +132,12 @@
   top: 50%;
   transform: translateY(-50%) rotate(180deg);
 }
+.AllCategories #img2 {
+  display: none;
+}
+.AllCategories .allcategories_card:hover #img2 {
+  display: inline-block;
+}
+.AllCategories .allcategories_card:hover #img1 {
+  display: none;
+}
