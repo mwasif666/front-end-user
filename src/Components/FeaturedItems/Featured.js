@@ -125,13 +125,21 @@ const Featured = (props) => {
                           <p>{item.category}</p>
                           <h4 className="text-center">{item.prodTitle}</h4>
                           <img
+<<<<<<< HEAD
                             src={item?.prodImg1}
+=======
+                            src={`http://localhost:5000/${item?.prodImg1}`}
+>>>>>>> 6e6aa7c6c928d52cc9a32735c650c05a70eda3a8
                             alt={item.prodTitle}
                             style={{ objectFit: "cover" }}
                             id="img1"
                           />
                           <img
+<<<<<<< HEAD
                             src={item?.prodImg2}
+=======
+                            src={`http://localhost:5000/${item?.prodImg2}`}
+>>>>>>> 6e6aa7c6c928d52cc9a32735c650c05a70eda3a8
                             alt={item.prodTitle}
                             style={{ objectFit: "cover" }}
                             id="img2"

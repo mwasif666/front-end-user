@@ -23,6 +23,7 @@ const ProductCard = () => {
   const [selectedItem, setSelectedItem] = useState(null);
   const { isLoading, product } = useContext(AuthContext);
 
+<<<<<<< HEAD
   const [visibleItems, setVisibleItems] = useState(10); // Initially show 10 items
   const itemsPerLoad = 10; // Number of items to load per click
 
@@ -30,6 +31,8 @@ const ProductCard = () => {
     setVisibleItems((prevVisibleItems) => prevVisibleItems + itemsPerLoad);
   };
 
+=======
+>>>>>>> 6e6aa7c6c928d52cc9a32735c650c05a70eda3a8
   const openModal = (item) => {
     setSelectedItem(item);
     setShow(true);
@@ -88,18 +91,31 @@ const ProductCard = () => {
       <ToastContainer />
 
       <Container fluid className="con allcategories_container">
+<<<<<<< HEAD
         <h2 className="Category_3_Heading">
           <span className="bottom_color">All Category Products</span>
         </h2>
+=======
+>>>>>>> 6e6aa7c6c928d52cc9a32735c650c05a70eda3a8
         <Row className="swiper-card-allcategorie">
           <Swiper
             spaceBetween={30}
             slidesPerView={4}
+<<<<<<< HEAD
             pagination={{ clickable: true }}
             modules={[Autoplay, Pagination]}
             className="mySwiper AllCategories"
           >
             {product.slice(0, visibleItems).map((item) => (
+=======
+            pagination={{
+              clickable: true,
+            }}
+            modules={[Autoplay, Pagination]}
+            className="mySwiper AllCategories"
+          >
+            {product.map((item) => (
+>>>>>>> 6e6aa7c6c928d52cc9a32735c650c05a70eda3a8
               <SwiperSlide key={item._id} className="swiper-card-allcategories">
                 <Col>
                   <Card className="allcategories_card">
@@ -128,6 +144,10 @@ const ProductCard = () => {
                             <i className="bi bi-cart4"></i>
                           </p>
                         </Tooltip>
+<<<<<<< HEAD
+=======
+
+>>>>>>> 6e6aa7c6c928d52cc9a32735c650c05a70eda3a8
                         <Tooltip
                           placement="left"
                           title="Quick View"
@@ -137,12 +157,17 @@ const ProductCard = () => {
                             <i className="bi bi-info"></i>
                           </p>
                         </Tooltip>
+<<<<<<< HEAD
                         <Tooltip
                           placement="left"
                           title="Wish List"
                           onClick={() => handleWhislist(item)}
                         >
                           <p>
+=======
+                        <Tooltip placement="left" title="Wish List">
+                          <p onClick={() => handleWhislist(item)}>
+>>>>>>> 6e6aa7c6c928d52cc9a32735c650c05a70eda3a8
                             <i className="bi bi-heart"></i>
                           </p>
                         </Tooltip>
@@ -156,7 +181,11 @@ const ProductCard = () => {
                       </div>
                     </div>
                     <div className="details-card-item text-center">
+<<<<<<< HEAD
                       <h4>Rs {item.prodPrice}</h4>
+=======
+                      <h4>Rs {item.prodPrice} </h4>
+>>>>>>> 6e6aa7c6c928d52cc9a32735c650c05a70eda3a8
                       <p className="Ratings">{item.ratingStarsIcons}</p>
                       <div className=" d-flex justify-content-center gap-2">
                         <p className="pt-1">Color:{item.prodColor}</p>
@@ -166,6 +195,7 @@ const ProductCard = () => {
                 </Col>
               </SwiperSlide>
             ))}
+<<<<<<< HEAD
             {visibleItems < product.length && (
               <SwiperSlide
                 key="load-more"
@@ -178,6 +208,8 @@ const ProductCard = () => {
                 </div>
               </SwiperSlide>
             )}
+=======
+>>>>>>> 6e6aa7c6c928d52cc9a32735c650c05a70eda3a8
           </Swiper>
         </Row>
       </Container>
@@ -205,10 +237,17 @@ const ProductCard = () => {
                       smallImage: {
                         alt: selectedItem?.prodTitle,
                         isFluidWidth: true,
+<<<<<<< HEAD
                         src: selectedItem?.prodImg1,
                       },
                       largeImage: {
                         src: selectedItem?.prodImg1,
+=======
+                        src: `http://localhost:5000/${selectedItem?.prodImg1}`,
+                      },
+                      largeImage: {
+                        src: `http://localhost:5000/${selectedItem?.prodImg1}`,
+>>>>>>> 6e6aa7c6c928d52cc9a32735c650c05a70eda3a8
                         width: 1200,
                         height: 1800,
                       },
@@ -247,9 +286,15 @@ const ProductCard = () => {
                     <h6>Color: {selectedItem?.prodColor}</h6>
                   </div>
                 </div>
+<<<<<<< HEAD
                 <div>
                   {selectedItem && selectedItem.quantity !== undefined ? (
                     <div className="col-lg-12">
+=======
+                <div className="buttons">
+                  {selectedItem && selectedItem.quantity !== undefined ? (
+                    <div className="col-lg-12 col-md-6 mb-4 mb-lg-0 d-flex gap-4">
+>>>>>>> 6e6aa7c6c928d52cc9a32735c650c05a70eda3a8
                       <div
                         className="d-flex mb-4 increase-decrease"
                         style={{ maxWidth: "150px" }}

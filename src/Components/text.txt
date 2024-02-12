@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useState, useEffect, useContext } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { addToCart, getCartTotal } from "../../features/cartSlice";
@@ -380,3 +381,612 @@ const Mobile = () => {
 };
 
 export default Mobile;
+=======
+import React, { useContext, useEffect, useState } from "react";
+import Container from "react-bootstrap/Container";
+import Form from "react-bootstrap/Form";
+import Navbar from "react-bootstrap/Navbar";
+import "./navbar.css";
+import { Link } from "react-router-dom";
+import Box from "@mui/material/Box";
+import Avatar from "@mui/material/Avatar";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import Divider from "@mui/material/Divider";
+import IconButton from "@mui/material/IconButton";
+import Tooltip from "@mui/material/Tooltip";
+import Settings from "@mui/icons-material/Settings";
+import Logout from "@mui/icons-material/Logout";
+import "../Responsive.css";
+import { Col, Row } from "react-bootstrap";
+import Toggle from "../Toggler";
+import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
+import img2 from "../WasifImg/wasif_ava.jpg";
+import { useDispatch, useSelector } from "react-redux";
+import { getCartTotal } from "../../features/cartSlice";
+import DropdownLink from "./Dropdown-menu";
+import { AuthContext } from "../../context/AuthContext";
+import ProductCard from "../ProductCard";
+
+function Nav_Bar() {
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const { authToken } = useContext(AuthContext);
+
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  const { cart, totalQuantity } = useSelector((state) => state.allCart);
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getCartTotal());
+  }, [cart]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [showDropdown, setShowDropdown] = useState(false);
+
+  const handleSearch = (e) => {
+    const query = e.target.value.toLowerCase();
+    setSearchQuery(query);
+    if (query.trim() !== "") {
+      setShowDropdown(true);
+    } else {
+      setShowDropdown(false);
+    }
+  };
+  return (
+    <>
+      <section className="section">
+        <Container>
+          <div className="main">
+            <div className="main1">
+              <div className="box1">
+                <i class="bi bi-telephone-fill"></i>
+                <p id="phone">+92301 3769247</p>
+                <p id="line">|</p>
+              </div>
+              <div className="box2">
+                <i class="bi bi-envelope"></i>
+                <p>mwasif66625426@gmail.com</p>
+              </div>
+            </div>
+            <div className="main2">
+              <div className="box3">
+                <i class="bi bi-geo-alt"></i>
+                <p id="location">Store Location</p>
+              </div>
+              <p id="line">|</p>
+              {authToken === null ? (
+                <div className="box4">
+                  <i class="bi bi-person"></i>
+                  <Link to="/login">Login or Register</Link>
+                </div>
+              ) : null}
+            </div>
+          </div>
+        </Container>
+      </section>
+      <Navbar expand="lg" className="Navbar-home bord">
+        <Container>
+          <Link to="/" className="e-solution">
+            <Navbar.Brand className="e-solution" href="#">
+              <img
+                src="https://ninetheme.com/themes/electron/wp-content/uploads/2023/08/electron-logo-standart.png"
+                alt=""
+              />
+            </Navbar.Brand>
+          </Link>
+          <div className="search-bar">
+            <input
+              type="text"
+              placeholder="Search"
+              value={searchQuery}
+              onChange={handleSearch}
+            />
+            <i className="bi bi-search"></i>
+          </div>
+          {showDropdown && (
+            <div className="search-results-dropdown">
+              <ProductCard searchQuery={searchQuery} />
+              <IconButton
+                onClick={() => setShowDropdown(false)}
+                className="close-dropdown-btn"
+                size="small"
+              >
+                <i className="bi bi-x"></i>
+              </IconButton>
+            </div>
+          )}
+          <Row className="icons-navbar">
+            <Col className="px-4">
+              <Tooltip title="Wishlist" arrow className="icons-mui">
+                <Link to="/wishlist">
+                  <FavoriteBorderOutlinedIcon />
+                </Link>
+              </Tooltip>
+            </Col>
+            <Col>
+              <Tooltip title="Cart" arrow className="icons-mui">
+                <Link to="/cart" className="icon-cart bi bi-cart4">
+                  <span className="icon-cart-quantity">{totalQuantity}</span>
+                </Link>
+              </Tooltip>
+            </Col>
+            <Col>
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  textAlign: "center",
+                }}
+              >
+                <Tooltip title="Account settings">
+                  <IconButton
+                    onClick={handleClick}
+                    size="small"
+                    sx={{ ml: 2 }}
+                    aria-controls={open ? "account-menu" : undefined}
+                    aria-haspopup="true"
+                    aria-expanded={open ? "true" : undefined}
+                  >
+                    <Avatar alt="Remy Sharp" src={img2} />
+                  </IconButton>
+                </Tooltip>
+              </Box>
+              <Menu
+                anchorEl={anchorEl}
+                id="account-menu"
+                open={open}
+                onClose={handleClose}
+                onClick={handleClose}
+                PaperProps={{
+                  elevation: 0,
+                  sx: {
+                    overflow: "visible",
+                    filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+                    mt: 1.5,
+                    "& .MuiAvatar-root": {
+                      width: 32,
+                      height: 32,
+                      ml: -0.5,
+                      mr: 1,
+                    },
+                    "&:before": {
+                      content: '""',
+                      display: "block",
+                      position: "absolute",
+                      top: 0,
+                      right: 14,
+                      width: 10,
+                      height: 10,
+                      bgcolor: "background.paper",
+                      transform: "translateY(-50%) rotate(45deg)",
+                      zIndex: 0,
+                    },
+                  },
+                }}
+                transformOrigin={{ horizontal: "right", vertical: "top" }}
+                anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+              >
+                <MenuItem onClick={handleClose}>
+                  <Link to="/MyAccount" className="d-flex align-items-center">
+                    <ListItemIcon>
+                      <Avatar alt="Remy Sharp" src={img2} />
+                    </ListItemIcon>
+                    My Account
+                  </Link>
+                </MenuItem>
+                <Divider />
+                <MenuItem onClick={handleClose}>
+                  <ListItemIcon>
+                    <Settings fontSize="small" />
+                  </ListItemIcon>
+                  Settings
+                </MenuItem>
+                <MenuItem onClick={handleClose}>
+                  <ListItemIcon>
+                    <Logout fontSize="small" />
+                  </ListItemIcon>
+                  Logout
+                </MenuItem>
+              </Menu>
+            </Col>
+          </Row>
+        </Container>
+      </Navbar>
+      <Navbar expand="lg" className="Navbar-home home2">
+        <Container>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <Row>
+              <Col md="7">
+                <DropdownLink />
+              </Col>
+              <Col md="5">
+                <ul class="navbar-nav m-auto mb-lg-0 linking">
+                  <Link to="/" className="anchors">
+                    Home
+                  </Link>
+
+                  <ul class="menu">
+                    <li class="menu-item services">
+                      <p className="anchors anchor-service">Collections</p>
+                      <div class="mega-box">
+                        <div class="content d-flex">
+                          <div class="row-card">
+                            <img
+                              src="https://electrolyte5-store.myshopify.com/cdn/shop/files/speaker_6bdf9179-5d00-4a23-8d54-348daa057261.jpg?v=1647240299"
+                              alt="Sample Image"
+                            />
+                          </div>
+                          <div class="row-card">
+                            <img
+                              src="https://electrolyte5-store.myshopify.com/cdn/shop/files/camera_afdff232-c266-438c-b2a9-6119a5c59f08.jpg?v=1647240299"
+                              alt="Sample Image"
+                            />
+                          </div>
+                          <div class="row-card">
+                            <img
+                              src="https://electrolyte5-store.myshopify.com/cdn/shop/files/tab.jpg?v=1647087309"
+                              alt="Sample Image"
+                            />
+                          </div>
+                          <div class="row-card">
+                            <img
+                              src="https://electrolyte5-store.myshopify.com/cdn/shop/files/phone.jpg?v=1647087309"
+                              alt="Sample Image"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                  <Link to="/About" className="anchors">
+                    About
+                  </Link>
+                  <Link to="/Contact" className="anchors anchor-contacts">
+                    Contact
+                  </Link>
+                </ul>
+              </Col>
+            </Row>
+          </div>
+        </Container>
+      </Navbar>
+      <Toggle className="toggle_view" />
+    </>
+  );
+}
+export default Nav_Bar;
+@import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
+* {
+  font-family: "Jost", sans-serif;
+}
+a {
+  text-decoration: none;
+}
+.box1,
+.box2,
+.main1,
+.main2,
+.box3,
+.box4 {
+  display: flex;
+}
+#line {
+  padding: 0px 20px;
+  color: lightgrey;
+}
+.box1 i,
+.box1 p,
+.box2 i,
+.box2 p,
+.box3 i,
+.box3 p .box4 i,
+.box4 p {
+  padding: 0px 5px;
+}
+.box1 i,
+.box2 i {
+  color: rgb(122, 122, 122);
+}
+.box3 p,
+.box4 p,
+.box1 p,
+.box2 p {
+  color: gray;
+}
+.section {
+  height: 30px;
+}
+
+.main {
+  padding: 5px 0px;
+  display: flex;
+  justify-content: space-between;
+}
+.Navbar-home {
+  background-color: white;
+}
+.home2 {
+  padding: 0 !important;
+}
+.bord {
+  border-top: 1px solid rgb(228, 228, 228);
+  padding-top: 20px;
+}
+.Form-control {
+  position: relative;
+  box-sizing: border-box;
+}
+.Form-control input {
+  width: 505px;
+  margin-left: 100px;
+  padding: 8px 0px;
+  border-radius: 30px;
+  border: 2px solid rgb(122, 122, 122);
+  outline: none;
+  padding-left: 30px;
+  padding-right: 20px;
+}
+.Form-control .bi-search {
+  background-color: rgb(122, 122, 122);
+  padding: 0px 20px;
+  padding-top: 10px;
+  padding-bottom: 9px;
+  border-top-right-radius: 30px;
+  border-bottom-right-radius: 30px;
+  position: absolute;
+  right: 0px;
+  color: white;
+}
+.e-solution img {
+  width: 170px;
+}
+.bad {
+  position: relative;
+  right: 10px;
+  margin: 0px 30px;
+}
+.icons-navbar .MuiSvgIcon-root {
+  font-size: 35px !important;
+  cursor: pointer;
+}
+.icons-navbar {
+  padding: 0px 30px;
+}
+.icons-navbar .MuiSvgIcon-root:hover {
+  color: #3160d8;
+}
+.icons-navbar {
+  object-fit: contain;
+  align-items: center;
+}
+.icon-cart {
+  font-size: 30px;
+  color: black;
+  text-decoration: none;
+  position: relative;
+}
+.icon-cart:hover {
+  color: #3160d8;
+}
+.icon-cart-quantity {
+  font-size: 15px;
+  position: absolute;
+  padding-left: 8px;
+  padding-top: 2px;
+  background-color: #ddd;
+  width: 25px;
+  height: 25px;
+  border-radius: 100%;
+  font-family: "Public Sans", sans-serif;
+  top: -10px !important;
+  color: black !important;
+}
+
+.anchors {
+  text-decoration: none;
+  color: rgb(53, 53, 53);
+  font-family: "Public Sans", sans-serif;
+  font-weight: 800;
+  font-size: 16px;
+  padding: 10px 0px;
+  text-transform: uppercase;
+}
+.linking {
+  display: flex;
+  gap: 40px;
+}
+.anchor-contacts {
+  padding-left: 10px;
+}
+.anchors:hover {
+  color: black;
+}
+.toggle_view {
+  display: none;
+  position: absolute;
+  z-index: 1;
+  top: 15px;
+  font-size: 30px;
+  color: rgb(78, 78, 93);
+  background-color: transparent;
+  border: none;
+}
+.toggle_view:hover {
+  background-color: transparent;
+}
+.menu {
+  padding: 0;
+  margin: 0;
+  cursor: grabbing;
+}
+
+.menu .menu-item {
+  position: relative;
+  display: inline-block;
+}
+.anchor-service {
+  padding: 10px 0px !important;
+}
+.desktop-item:hover {
+  background-color: #f1f1f1;
+}
+
+.checkbox-trigger {
+  display: none;
+}
+
+/* Style the mega-box */
+.mega-box {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: -300px !important;
+  right: 0 !important;
+  background: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  width: 1100px;
+  border: 1px solid #ddd;
+  border-top: 4px #f6d600 solid;
+}
+
+.services:hover .mega-box {
+  display: block;
+}
+
+.services .anchor-service::after {
+  content: "\f078";
+  font-size: 15px;
+  margin-left: 5px;
+  transition: transform 0.2s;
+  font-family: "Font Awesome 6 Free";
+}
+
+.services:hover .anchor-service::after {
+  content: "\f077";
+  transform: rotate(180deg);
+}
+
+.menu .menu-item:hover .mega-box,
+.checkbox-trigger:checked ~ .mega-box {
+  display: block;
+}
+.menu .menu-item:hover .mega-box-2,
+.checkbox-trigger:checked ~ .mega-box-2 {
+  display: block;
+}
+.mega-box img {
+  width: 250px;
+}
+/* Style the content within the mega-box */
+.mega-box .content {
+  padding: 20px 10px;
+}
+.mega-box .content a {
+  color: black;
+  text-decoration: none;
+}
+.row-card {
+  padding: 10px 10px;
+}
+
+.row:first-child {
+  border-top: none;
+}
+
+header {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.dropdown-submenu {
+  position: relative;
+}
+
+.dropdown-submenu .dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -1px;
+}
+
+.dropdown-menu.show {
+  display: block;
+}
+/* Search Bar */
+.search-bar {
+  position: relative;
+}
+
+.search-bar input[type="text"] {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  outline: none;
+}
+
+.search-bar i {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #666;
+  cursor: pointer;
+}
+
+/* Dropdown Menu */
+.search-results-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  z-index: 10;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+/* Individual Result Item */
+.search-results-dropdown .result-item {
+  padding: 8px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.search-results-dropdown .result-item:last-child {
+  border-bottom: none;
+}
+
+.search-results-dropdown .result-item:hover {
+  background-color: #f4f4f4;
+  cursor: pointer;
+}
+.filter-Product .content-box-cart2 {
+  bottom: 50px;
+}
+.filter-Product img {
+  width: 150px;
+  bottom: 0;
+}
+.filter-Product .card {
+  width: 300px;
+  display: flex;
+  height: 200px;
+}
+.filter-Product #img2 {
+  display: none;
+}
+.filter-Product .allcategories_card:hover #img2 {
+  display: inline-block;
+}
+.filter-Product .allcategories_card:hover #img1 {
+  display: none;
+}
+>>>>>>> 6e6aa7c6c928d52cc9a32735c650c05a70eda3a8
