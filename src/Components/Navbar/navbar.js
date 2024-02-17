@@ -24,11 +24,12 @@ import { getCartTotal } from "../../features/cartSlice";
 import DropdownLink from "./Dropdown-menu";
 import { AuthContext } from "../../context/AuthContext";
 import ProductCard from "../ProductCard";
+import { useNavigate } from "react-router-dom";
 
 function Nav_Bar() {
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const { authToken } = useContext(AuthContext);
-
+  const { authToken, logout } = useContext(AuthContext);
+  const navigate = useNavigate()
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -54,6 +55,16 @@ function Nav_Bar() {
       setShowDropdown(false);
     }
   };
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+      navigate("/");
+    } catch (error) {
+      console.error("Error during logout:", error);
+    }
+  };
+  
   return (
     <>
       <section className="section">
@@ -132,7 +143,7 @@ function Nav_Bar() {
                 </Link>
               </Tooltip>
             </Col>
-            <Col>
+            {authToken ? <Col>
               <Box
                 sx={{
                   display: "flex",
@@ -203,14 +214,14 @@ function Nav_Bar() {
                   </ListItemIcon>
                   Settings
                 </MenuItem>
-                <MenuItem onClick={handleClose}>
+                <MenuItem onClick={handleLogout}>
                   <ListItemIcon>
-                    <Logout fontSize="small" />
+                    <Logout fontSize="small" onClick={handleLogout} />
                   </ListItemIcon>
                   Logout
                 </MenuItem>
               </Menu>
-            </Col>
+            </Col>:null}
           </Row>
         </Container>
       </Navbar>
