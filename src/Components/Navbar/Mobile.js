@@ -1,145 +1,206 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { addToCart, getCartTotal } from "../../features/cartSlice";
-import { Card, CardImg, Col, Container, Row } from "react-bootstrap";
-import { Swiper, SwiperSlide } from "swiper/react";
-// Import Swiper styles
-import "swiper/css";
-import { Autoplay, Pagination } from "swiper/modules";
+import { Card, Col, Container, Row } from "react-bootstrap";
 import Modal from "react-bootstrap/Modal";
-import "../AllCategory/AllCategories.css";
-import ReactImageMagnify from "react-image-magnify";
-import imgFire from "../Assests/fire.png";
 import { NavLink } from "react-router-dom";
 import { Tooltip } from "antd";
-import "react-toastify/dist/ReactToastify.css";
 import { addFav } from "../../features/favCartSlice";
-const Featured = (props) => {
-  // Fetch items from the Redux store. Initialize it as an empty array if needed.
+import { ToastContainer } from "react-toastify";
+import { Slider } from "antd";
+import Accordion from "react-bootstrap/Accordion";
+import { AuthContext } from "../../context/AuthContext";
+import ReactImageMagnify from "react-image-magnify";
+import "./categorycard.css";
+import animated from "../animated/Eclipse-1s-200px (1).gif";
+import Animated from "../animated/Animated";
 
-  const items = useSelector((state) => state.allCart.items) || [];
+const Mobile = () => {
+  const { isLoading, product } = useContext(AuthContext);
+  const { items } = useSelector((state) => state.allCart) || [];
   const dispatch = useDispatch();
-  // State for the modal
+
   const [show, setShow] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
+  const [minPrice, setMinPrice] = useState(0);
+  const [maxPrice, setMaxPrice] = useState(70000);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedCategories, setSelectedCategories] = useState([]);
 
-  // Function to open the modal and set the selected item
+  // Handle opening and closing of modal
   const openModal = (item) => {
-    console.log("Opening modal with item:", item);
     setSelectedItem(item);
     setShow(true);
   };
 
-  // Function to close the modal
   const closeModal = () => {
-    console.log("Closing modal");
     setSelectedItem(null);
     setShow(false);
   };
 
+  // Decrease quantity
   const handleDecrease = () => {
-    if (selectedItem && selectedItem.quantity !== undefined) {
-      const updatedItem = { ...selectedItem };
-      if (updatedItem.quantity > 1) {
-        updatedItem.quantity -= 1;
-        setSelectedItem(updatedItem);
-      }
+    if (
+      selectedItem &&
+      selectedItem.quantity !== undefined &&
+      selectedItem.quantity > 1
+    ) {
+      setSelectedItem((prevItem) => ({
+        ...prevItem,
+        quantity: prevItem.quantity - 1,
+      }));
     }
   };
 
+  // Increase quantity
   const handleIncrease = () => {
     if (selectedItem && selectedItem.quantity !== undefined) {
-      const updatedItem = { ...selectedItem };
-      updatedItem.quantity += 1;
-      setSelectedItem(updatedItem);
+      setSelectedItem((prevItem) => ({
+        ...prevItem,
+        quantity: prevItem.quantity + 1,
+      }));
     }
   };
 
+  // Add to cart
   const handleAddToCart = () => {
     if (selectedItem) {
       dispatch(addToCart(selectedItem));
     }
   };
 
+  // Add to cart for main items
   const handleAddToCartMain = (item) => {
     if (item) {
       dispatch(addToCart(item));
     }
   };
 
-  const { cart } = useSelector((state) => state.allCart);
-  // Calculate the total quantity and price
-  useEffect(() => {
-    dispatch(getCartTotal());
-  }, [cart]);
-
+  // Add to wishlist
   const handleWhislist = (item) => {
     dispatch(addFav(item));
   };
 
-  const [loading, setLoading] = useState(true);
-  const [featuredProduct, setFeaturedProduct] = useState([]);
-  const getFeaturedProd = async () => {
-    setLoading(true);
-    try {
-      const response = await fetch(
-        `http://localhost:5000/api/prod/v1/getproduct?productFeatured=${props.setFeaturedProd}`
-      );
-      const res = await response.json();
-      console.log(res);
-      if (res.success) {
-        setFeaturedProduct(res.findByFeatures);
-        setLoading(false);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  useEffect(() => {
-    getFeaturedProd();
-  }, []);
+  // Filter products based on filter values
+  const filteredProducts = product.filter(
+    (item) =>
+      item.productFeatured.toLowerCase().includes("entertainment") &&
+      parseFloat(item.prodPrice) >= minPrice &&
+      parseFloat(item.prodPrice) <= maxPrice &&
+      item.prodTitle.toLowerCase().includes(searchQuery.toLowerCase()) &&
+      (selectedCategories.length === 0 ||
+        selectedCategories.includes(item.productFeatured))
+  );
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+  // Handle category checkbox change
+  const handleCategoryCheckboxChange = (productFeatured) => {
+    setSelectedCategories((prevCategories) => {
+      if (prevCategories.includes(productFeatured)) {
+        return prevCategories.filter((cat) => cat !== productFeatured);
+      } else {
+        return [...prevCategories, productFeatured];
+      }
+    });
+  };
+
   return (
     <>
-      <Container fluid className="con allcategories_container">
-        <Row className="swiper-card-allcategorie">
-          <Swiper
-            spaceBetween={30}
-            slidesPerView={4}
-            pagination={{
-              clickable: true,
-            }}
-            modules={[Autoplay, Pagination]}
-            className="mySwiper AllCategories"
-          >
-            {featuredProduct &&
-              featuredProduct.map((item, index) => (
-                <SwiperSlide key={index} className="swiper-card-allcategories">
-                  <Col>
-                    <Card className="allcategories_card">
+      <div>
+        <Animated />
+      </div>
+
+      <ToastContainer />
+      <Container fluid className="con">
+        <Row>
+          <Col md="3" className="mt-3 filtering">
+            <Accordion defaultActiveKey="0" flush className="border-1">
+              {/* Filter by price */}
+              <Accordion.Item eventKey="0">
+                <Accordion.Header>Filter by price</Accordion.Header>
+                <Accordion.Body>
+                  <Slider
+                    range
+                    min={0}
+                    max={70000}
+                    step={10}
+                    value={[minPrice, maxPrice]}
+                    onChange={([min, max]) => {
+                      setMinPrice(min);
+                      setMaxPrice(max);
+                    }}
+                  />
+                  <div className="input-filters-number d-flex">
+                    <input
+                      type="number"
+                      value={minPrice}
+                      onChange={(e) => setMinPrice(e.target.value)}
+                      placeholder="Min Price"
+                    />
+                    <input
+                      type="number"
+                      value={maxPrice}
+                      onChange={(e) => setMaxPrice(e.target.value)}
+                      placeholder="Max Price"
+                    />
+                  </div>
+                </Accordion.Body>
+              </Accordion.Item>
+              {/* Search Product */}
+              <Accordion.Item eventKey="1">
+                <Accordion.Header>Search Product</Accordion.Header>
+                <Accordion.Body>
+                  <input
+                    type="text"
+                    id="search-filter-input"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    placeholder="Search by title"
+                  />
+                </Accordion.Body>
+              </Accordion.Item>
+              {/* Product Categories */}
+              <Accordion.Item eventKey="2">
+                <Accordion.Header>Product Categories</Accordion.Header>
+                <Accordion.Body>
+                  <div>
+                    {Array.from(
+                      new Set(product.map((item) => item.productFeatured))
+                    ).map((productFeatured) => (
+                      <label key={productFeatured}>
+                        <input
+                          type="checkbox"
+                          checked={selectedCategories.includes(productFeatured)}
+                          onChange={() =>
+                            handleCategoryCheckboxChange(productFeatured)
+                          }
+                        />
+                        {productFeatured}
+                      </label>
+                    ))}
+                  </div>
+                </Accordion.Body>
+              </Accordion.Item>
+            </Accordion>
+          </Col>
+          {/* Render filtered products  */}
+          <Col md="9">
+            <Row>
+              {filteredProducts.map((item) => (
+                <Col md="4">
+                  <div key={item._id}>
+                    <Card className="allcategories_card allcategories_card-2">
                       <NavLink to={`cartClickData/${item._id}`}>
                         <div className="iamges-categories">
                           <p>{item.category}</p>
                           <h4 className="text-center">{item.prodTitle}</h4>
                           <img
-<<<<<<< HEAD
                             src={item?.prodImg1}
-=======
-                            src={`http://localhost:5000/${item?.prodImg1}`}
->>>>>>> 6e6aa7c6c928d52cc9a32735c650c05a70eda3a8
                             alt={item.prodTitle}
                             style={{ objectFit: "cover" }}
                             id="img1"
                           />
                           <img
-<<<<<<< HEAD
                             src={item?.prodImg2}
-=======
-                            src={`http://localhost:5000/${item?.prodImg2}`}
->>>>>>> 6e6aa7c6c928d52cc9a32735c650c05a70eda3a8
                             alt={item.prodTitle}
                             style={{ objectFit: "cover" }}
                             id="img2"
@@ -153,7 +214,6 @@ const Featured = (props) => {
                               <i className="bi bi-cart4"></i>
                             </p>
                           </Tooltip>
-
                           <Tooltip
                             placement="left"
                             title="Quick View"
@@ -179,16 +239,18 @@ const Featured = (props) => {
                       </div>
                       <div className="details-card-item text-center">
                         <h4>Rs {item.prodPrice} </h4>
-                        <p className="Ratings">{item.ratingStarsIcons}</p>
+                        {/* Add ratings if available */}
+                        {/* <p className="Ratings">{item.ratingStarsIcons}</p> */}
                         <div className=" d-flex justify-content-center gap-2">
                           <p className="pt-1">Color:{item.prodColor}</p>
                         </div>
                       </div>
                     </Card>
-                  </Col>
-                </SwiperSlide>
+                  </div>
+                </Col>
               ))}
-          </Swiper>
+            </Row>
+          </Col>
         </Row>
       </Container>
       <Modal
@@ -213,12 +275,12 @@ const Featured = (props) => {
                   <ReactImageMagnify
                     {...{
                       smallImage: {
-                        alt: selectedItem?.title,
+                        alt: selectedItem?.prodTitle,
                         isFluidWidth: true,
-                        src: selectedItem?.img,
+                        src: `http://localhost:5000/${selectedItem?.prodImg1}`,
                       },
                       largeImage: {
-                        src: selectedItem?.img,
+                        src: `http://localhost:5000/${selectedItem?.prodImg1}`,
                         width: 1200,
                         height: 1800,
                       },
@@ -228,7 +290,7 @@ const Featured = (props) => {
               </div>
               <div className="col-md-7 modal-card-1">
                 <div style={{ marginLeft: "10px" }}>
-                  <h1>{selectedItem?.title}</h1>
+                  <h1>{selectedItem?.prodTitle}</h1>
                   <div className="ratings-modal d-flex gap-3">
                     <div className="ratings-modal-1">
                       <i class="fa-solid fa-star"></i>
@@ -242,18 +304,22 @@ const Featured = (props) => {
                         <p>5 Reviews</p>
                       </div>
                       <div className="ratings-modal-sub-2 ps-4">
-                        <img src={imgFire} />
+                        <i class="fa-solid fa-truck-fast"></i>
                       </div>
                       <div className="ratings-modal-sub-2">
-                        <p>8 sold in last 10 hours</p>
+                        <p>
+                          <span>{selectedItem?.prodQty}</span> Items in stock
+                        </p>
                       </div>
                     </div>
                   </div>
                   <div className="modal-cart-price">
-                    <h3>Rs {selectedItem?.price}</h3>
-                    <p>{selectedItem?.description}</p>
-                    <h6>Color: {selectedItem?.color}</h6>
+                    <h3>Rs {selectedItem?.prodPrice}</h3>
+                    <p>{selectedItem?.prodDesc}</p>
+                    <h6>Color: {selectedItem?.prodColor}</h6>
                   </div>
+                </div>
+                <div className="buttons">
                   {selectedItem && selectedItem.quantity !== undefined ? (
                     <div className="col-lg-12 col-md-6 mb-4 mb-lg-0 d-flex gap-4">
                       <div
@@ -287,7 +353,7 @@ const Featured = (props) => {
                       <div className="increase-decrese-2 ">
                         <button
                           className="modal-cart-button btn"
-                          onClick={handleAddToCart}
+                          onClick={() => dispatch(addToCart(selectedItem))}
                         >
                           <p>Add To Cart</p>
                           <i className="bi bi-cart4"></i>
@@ -308,4 +374,4 @@ const Featured = (props) => {
   );
 };
 
-export default Featured;
+export default Mobile;

@@ -54,9 +54,7 @@ main {
 .image-gallery-thumbnail {
   width: 70px !important;
 }
-.allcategories_card-2 {
-  width: 330px;
-}
+
 
 .accordion-button::after {
   font-family: "Font Awesome 6 Free";

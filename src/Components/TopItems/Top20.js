@@ -14,6 +14,10 @@ import { NavLink } from "react-router-dom";
 import { Tooltip } from "antd";
 import "react-toastify/dist/ReactToastify.css";
 import { addFav } from "../../features/favCartSlice";
+<<<<<<< HEAD
+import Animated from "../animated/Animated";
+=======
+>>>>>>> 6e6aa7c6c928d52cc9a32735c650c05a70eda3a8
 const Top20 = (props) => {
   // Fetch items from the Redux store. Initialize it as an empty array if needed.
 
@@ -100,7 +104,15 @@ const Top20 = (props) => {
   }, []);
 
   if (loading) {
+<<<<<<< HEAD
+    return (
+      <div>
+        <Animated />
+      </div>
+    );
+=======
     return <div>Loading...</div>;
+>>>>>>> 6e6aa7c6c928d52cc9a32735c650c05a70eda3a8
   }
   return (
     <>
@@ -125,13 +137,21 @@ const Top20 = (props) => {
                           <p>{item.category}</p>
                           <h4 className="text-center">{item.prodTitle}</h4>
                           <img
+<<<<<<< HEAD
+                            src={item?.prodImg1}
+=======
                             src={`http://localhost:5000/${item?.prodImg1}`}
+>>>>>>> 6e6aa7c6c928d52cc9a32735c650c05a70eda3a8
                             alt={item.prodTitle}
                             style={{ objectFit: "cover" }}
                             id="img1"
                           />
                           <img
+<<<<<<< HEAD
+                            src={item?.prodImg2}
+=======
                             src={`http://localhost:5000/${item?.prodImg2}`}
+>>>>>>> 6e6aa7c6c928d52cc9a32735c650c05a70eda3a8
                             alt={item.prodTitle}
                             style={{ objectFit: "cover" }}
                             id="img2"

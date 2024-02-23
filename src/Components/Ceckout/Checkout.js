@@ -38,9 +38,15 @@ function CheckoutForm() {
   useEffect(() => {
     dispatch(getCartTotal());
   }, [cart]);
+<<<<<<< HEAD
+
+  const handlePlaceOrder = async (e) => {
+    alert(cart);
+=======
   
   const handlePlaceOrder = async (e) => {
     alert(cart)
+>>>>>>> 6e6aa7c6c928d52cc9a32735c650c05a70eda3a8
     try {
       const response = await fetch(
         "http://localhost:5000/api/order/v1/placeorder",
@@ -72,7 +78,11 @@ function CheckoutForm() {
           }),
         }
       );
+<<<<<<< HEAD
+
+=======
  
+>>>>>>> 6e6aa7c6c928d52cc9a32735c650c05a70eda3a8
       const data = await response.json();
       if (data.success) {
         alert("Place Order ");

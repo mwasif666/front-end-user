@@ -14,7 +14,7 @@
   padding-bottom: 2px;
   border-bottom: 1px solid lightgrey;
 }
-.background_Category_3 .bottom_color {
+.bottom_color {
   border-bottom: 3px solid var(--col1);
 }
 .background_Category_3 .swiper {
