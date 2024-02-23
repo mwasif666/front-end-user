@@ -29,6 +29,7 @@ import { useNavigate } from "react-router-dom";
 function Nav_Bar() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const { authToken, logout } = useContext(AuthContext);
+  console.log("check");
   const navigate = useNavigate()
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
